@@ -6,10 +6,22 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
+<<<<<<< HEAD
 import playercharacter.PhysicalPlayerCharacter;
+=======
+import com.jme3.terrain.geomipmap.TerrainLodControl;
+import com.jme3.terrain.geomipmap.TerrainQuad;
+import com.jme3.terrain.heightmap.AbstractHeightMap;
+import com.jme3.terrain.heightmap.ImageBasedHeightMap;
+import com.jme3.texture.Texture;
+import com.jme3.texture.Texture.WrapMode;
+>>>>>>> 401e8e3724dbb960428e08ae265a0bf3cdbc74ea
 
 public class Main extends SimpleApplication {
 
+    private TerrainQuad terrain;
+    Material mat_terrain; 
+    
     public static void main(String[] args) {
         Main app = new Main();
         app.start();
@@ -17,8 +29,14 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+<<<<<<< HEAD
         PhysicalPlayerCharacter character = new PhysicalPlayerCharacter(rootNode, assetManager);
         character.initChar();
+=======
+        flyCam.setMoveSpeed(50);
+        
+      
+>>>>>>> 401e8e3724dbb960428e08ae265a0bf3cdbc74ea
     }
 
     @Override
