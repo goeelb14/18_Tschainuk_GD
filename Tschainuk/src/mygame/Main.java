@@ -23,6 +23,7 @@ public class Main extends SimpleApplication {
         app.start();
     }
 
+    //test change by Simon
     @Override
     public void simpleInitApp() {
         flyCam.setMoveSpeed(50);
