@@ -14,6 +14,7 @@ public class Main extends SimpleApplication {
         app.start();
     }
 
+    //test change by Simon
     @Override
     public void simpleInitApp() {
         Box b = new Box(1, 1, 1);
