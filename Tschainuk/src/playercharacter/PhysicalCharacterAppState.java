@@ -34,6 +34,11 @@ public class PhysicalCharacterAppState extends AbstractAppState {
     private AssetManager assetManager;
     private BulletAppState bulletAppState;
     private AppStateManager stateManager;
+    
+    public PhysicalCharacterAppState(BulletAppState bulletAppState)
+    {
+        this.bulletAppState = bulletAppState;
+    }
 
     //Initializes PhysicalCharacter Properties
     private void initChar() {
@@ -47,7 +52,6 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         // Attach physical properties to model and PhysicsSpace
         myCharacter.addControl(myCharacter_phys);
         bulletAppState.getPhysicsSpace().add(myCharacter_phys);
-        
         
 //        Box b = new Box(10, 1, 10);
 //        Geometry geom = new Geometry("Box", b);
@@ -72,7 +76,6 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         assetManager = app.getAssetManager();
         rootNode = ((SimpleApplication) app).getRootNode();
 
-        bulletAppState = new BulletAppState(PhysicsSpace.BroadphaseType.SIMPLE);
         this.stateManager = stateManager;
         this.stateManager.attach(bulletAppState);
         
