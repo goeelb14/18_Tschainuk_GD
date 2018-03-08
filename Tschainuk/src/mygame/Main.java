@@ -29,7 +29,7 @@ public class Main extends SimpleApplication {
         PhysicalPlayerCharacter character = new PhysicalPlayerCharacter(rootNode, assetManager);
         character.initChar();
         flyCam.setMoveSpeed(50);
-        
+        //paul
         }
 
     @Override
