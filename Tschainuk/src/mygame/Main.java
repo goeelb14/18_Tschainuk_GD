@@ -4,15 +4,8 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
-import playercharacter.PhysicalPlayerCharacter;
-import com.jme3.terrain.geomipmap.TerrainLodControl;
 import com.jme3.terrain.geomipmap.TerrainQuad;
-import com.jme3.terrain.heightmap.AbstractHeightMap;
-import com.jme3.terrain.heightmap.ImageBasedHeightMap;
-import com.jme3.texture.Texture;
-import com.jme3.texture.Texture.WrapMode;
+import playercharacter.PhysicalCharacterAppState;
 
 public class Main extends SimpleApplication {
 
@@ -26,10 +19,11 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        PhysicalPlayerCharacter character = new PhysicalPlayerCharacter(rootNode, assetManager);
-        character.initChar();
+        
         flyCam.setMoveSpeed(50);
-        //paul
+        PhysicalCharacterAppState pca = new PhysicalCharacterAppState();
+        stateManager.attach(pca);
+        viewPort.setBackgroundColor(ColorRGBA.White);
         }
 
     @Override
