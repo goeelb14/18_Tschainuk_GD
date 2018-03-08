@@ -39,6 +39,7 @@ public class PhysicalCharacterAppState extends AbstractAppState {
     private void initChar() {
         // Load any model
         Node myCharacter = (Node) assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+        myCharacter.setLocalTranslation(0, 100, 0);
         rootNode.attachChild(myCharacter);
         // Create a appropriate physical shape for it
         CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
@@ -48,21 +49,21 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         bulletAppState.getPhysicsSpace().add(myCharacter_phys);
         
         
-        Box b = new Box(10, 1, 10);
-        Geometry geom = new Geometry("Box", b);
-        geom.setLocalTranslation(1, -5, 1);
-
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Blue);
-        geom.setMaterial(mat);
-        
-        CollisionShape colShape = CollisionShapeFactory.createBoxShape(geom);
-        RigidBodyControl rbc = new RigidBodyControl(colShape,0);
-        geom.addControl(rbc);
-        bulletAppState.getPhysicsSpace().add(geom);
-        
-
-        rootNode.attachChild(geom);
+//        Box b = new Box(10, 1, 10);
+//        Geometry geom = new Geometry("Box", b);
+//        geom.setLocalTranslation(1, -5, 1);
+//
+//        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+//        mat.setColor("Color", ColorRGBA.Blue);
+//        geom.setMaterial(mat);
+//        
+//        CollisionShape colShape = CollisionShapeFactory.createBoxShape(geom);
+//        RigidBodyControl rbc = new RigidBodyControl(colShape,0);
+//        geom.addControl(rbc);
+//        bulletAppState.getPhysicsSpace().add(geom);
+//        
+//
+//        rootNode.attachChild(geom);
     }
 
     @Override

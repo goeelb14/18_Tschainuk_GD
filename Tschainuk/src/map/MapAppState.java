@@ -19,7 +19,7 @@ import com.jme3.scene.Spatial;
  *
  * @author Schule
  */
-public class TerrainTest extends AbstractAppState
+public class MapAppState extends AbstractAppState
 {
     private Node rootNode;
 
@@ -27,7 +27,6 @@ public class TerrainTest extends AbstractAppState
     public void initialize(AppStateManager stateManager, Application app) 
     {
         super.initialize(stateManager, app); //To change body of generated methods, choose Tools | Templates.
-        //viewPort.setBackgroundColor(ColorRGBA.Yellow);
         Spatial scene =  app.getAssetManager().loadModel("Scenes/newScene.j3o");            
         
         DirectionalLight sun = new DirectionalLight();
