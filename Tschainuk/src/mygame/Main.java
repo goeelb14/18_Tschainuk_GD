@@ -6,6 +6,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
+import playercharacter.PhysicalPlayerCharacter;
 import com.jme3.terrain.geomipmap.TerrainLodControl;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
@@ -23,11 +24,13 @@ public class Main extends SimpleApplication {
         app.start();
     }
 
-    //test change by Simon
     @Override
     public void simpleInitApp() {
+        PhysicalPlayerCharacter character = new PhysicalPlayerCharacter(rootNode, assetManager);
+        character.initChar();
         flyCam.setMoveSpeed(50);
         
+<<<<<<< HEAD
         /** 1. Create terrain material and load four textures into it. */
         mat_terrain = new Material(assetManager,
                 "Common/MatDefs/Terrain/Terrain.j3md");
@@ -85,6 +88,9 @@ public class Main extends SimpleApplication {
         TerrainLodControl control = new TerrainLodControl(terrain, getCamera());
         terrain.addControl(control);
     }
+=======
+        }
+>>>>>>> e93b44676e9a2e6298c9a1e0a1f8388e850e48d3
 
     @Override
     public void simpleUpdate(float tpf) {
