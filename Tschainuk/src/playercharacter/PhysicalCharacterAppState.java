@@ -11,8 +11,12 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
+import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.CharacterControl;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -44,18 +48,18 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         bulletAppState.getPhysicsSpace().add(myCharacter_phys);
         
         
-        Box b = new Box(1, 1, 2);
+        Box b = new Box(10, 1, 10);
         Geometry geom = new Geometry("Box", b);
-        geom.setLocalTranslation(1, -3, 2.5f);
+        geom.setLocalTranslation(1, -5, 1);
 
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", ColorRGBA.Blue);
         geom.setMaterial(mat);
         
-        CapsuleCollisionShape boxShape = new CapsuleCollisionShape(1.5f, 6f, 1);
-        CharacterControl box_phys = new CharacterControl(capsuleShape, 0.01f);
-        geom.addControl(box_phys);
-        bulletAppState.getPhysicsSpace().add(box_phys);
+        CollisionShape colShape = CollisionShapeFactory.createBoxShape(geom);
+        RigidBodyControl rbc = new RigidBodyControl(colShape,0);
+        geom.addControl(rbc);
+        bulletAppState.getPhysicsSpace().add(geom);
         
 
         rootNode.attachChild(geom);
@@ -67,7 +71,7 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         assetManager = app.getAssetManager();
         rootNode = ((SimpleApplication) app).getRootNode();
 
-        bulletAppState = new BulletAppState();
+        bulletAppState = new BulletAppState(PhysicsSpace.BroadphaseType.SIMPLE);
         this.stateManager = stateManager;
         this.stateManager.attach(bulletAppState);
         
