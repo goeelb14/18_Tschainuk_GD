@@ -1,8 +1,6 @@
 package mygame;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.PhysicsSpace;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
@@ -13,8 +11,7 @@ import playercharacter.PhysicalCharacterAppState;
 public class Main extends SimpleApplication {
 
     private TerrainQuad terrain;
-    private Material mat_terrain; 
-    private BulletAppState bulletAppState;
+    Material mat_terrain; 
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -23,10 +20,10 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        bulletAppState = new BulletAppState(PhysicsSpace.BroadphaseType.SIMPLE);
+        
         flyCam.setMoveSpeed(50);
-        PhysicalCharacterAppState pca = new PhysicalCharacterAppState(bulletAppState);
-        MapAppState tt = new MapAppState(bulletAppState);
+        PhysicalCharacterAppState pca = new PhysicalCharacterAppState();
+        MapAppState tt = new MapAppState();
         stateManager.attach(pca);
         stateManager.attach(tt);
         viewPort.setBackgroundColor(ColorRGBA.White);
