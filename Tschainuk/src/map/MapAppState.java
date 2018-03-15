@@ -21,7 +21,7 @@ import com.jme3.scene.Spatial;
 
 /**
  *
- * @author Schule
+ * @author Paul
  */
 public class MapAppState extends AbstractAppState
 {
@@ -39,7 +39,7 @@ public class MapAppState extends AbstractAppState
         super.initialize(stateManager, app); //To change body of generated methods, choose Tools | Templates.
         rootNode = ((SimpleApplication)app).getRootNode();
         
-        Spatial scene =  app.getAssetManager().loadModel("Scenes/newScene.j3o");
+        Spatial scene =  app.getAssetManager().loadModel("Scenes/entryScene.j3o");
         rootNode.attachChild(scene);
         
         DirectionalLight sun = new DirectionalLight();
@@ -47,7 +47,7 @@ public class MapAppState extends AbstractAppState
         sun.setDirection(new Vector3f(-1f, -1f, -1.0f).normalizeLocal());
         scene.addLight(sun);
         
-        Spatial terrain = rootNode.getChild("level");
+        Spatial terrain = rootNode.getChild("basic");
         
         CollisionShape cs = CollisionShapeFactory.createMeshShape(terrain);
         RigidBodyControl rbc = new RigidBodyControl(cs, 0);
