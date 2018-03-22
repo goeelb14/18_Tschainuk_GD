@@ -13,6 +13,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
+import com.jme3.input.InputManager;
 import com.jme3.scene.Node;
 
 /**
@@ -25,6 +26,7 @@ public class PhysicalCharacterAppState extends AbstractAppState {
     private AssetManager assetManager;
     private BulletAppState bulletAppState;
     private AppStateManager stateManager;
+    private InputManager inputManager;
     
     public PhysicalCharacterAppState(BulletAppState bulletAppState)
     {
@@ -52,6 +54,7 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         rootNode = ((SimpleApplication) app).getRootNode();
 
         this.stateManager = stateManager;
+        this.inputManager = app.getInputManager();
         
         initChar();
 
