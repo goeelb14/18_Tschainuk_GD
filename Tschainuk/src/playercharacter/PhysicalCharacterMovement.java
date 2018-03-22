@@ -1,38 +1,52 @@
 
 package playercharacter;
 
+import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.Vector3f;
+import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 
 public class PhysicalCharacterMovement implements AnalogListener
 {
-    private InputManager inputManager;
+ 
+    private BetterCharacterControl playerControl;
+    private Camera flyCam;
     
-    public PhysicalCharacterMovement(InputManager inputManager,Node rootNode)
+    public PhysicalCharacterMovement(BetterCharacterControl playerControl, Camera flyCam)
     {
-        this.inputManager = inputManager;
-        setUpKeys();
+        this.playerControl = playerControl;
+        this.flyCam = flyCam;
     }
     
-     private void setUpKeys() {
-        inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
-        inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
-        inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_W));
-        inputManager.addMapping("Down", new KeyTrigger(KeyInput.KEY_S));
-        inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
-        inputManager.addListener(this, "Left");
-        inputManager.addListener(this, "Right");
-        inputManager.addListener(this, "Up");
-        inputManager.addListener(this, "Down");
-        inputManager.addListener(this, "Jump");
-      }
-    
+   
     @Override
     public void onAnalog(String name, float value, float tpf) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        /*
+         camDir.set(cam.getDirection()).multLocal(speed, 0.0f, speed);
+            camLeft.set(cam.getLeft()).multLocal(strafeSpeed);
+            walkDirection.set(0, 0, 0);
+            if (left) {
+                walkDirection.addLocal(camLeft);
+            }
+            if (right) {
+                walkDirection.addLocal(camLeft.negate());
+            }
+            if (up) {
+                walkDirection.addLocal(camDir);
+            }
+            if (down) {
+                walkDirection.addLocal(camDir.negate());
+            }
+            player.setWalkDirection(walkDirection);
+            
+     
+            cam.setLocation(new Vector3f(PlayerModel.getLocalTranslation().x,PlayerModel.getLocalTranslation().y + headHeight,PlayerModel.getLocalTranslation().z));
+        */
+        
     }
     
     
