@@ -21,6 +21,8 @@ public class PhysicalCharacterAppState extends AbstractAppState {
     private AppStateManager stateManager;
     private InputManager inputManager;
     
+    private boolean moveLeft, moveRight, moveForward, moveBack;
+    
     public PhysicalCharacterAppState(BulletAppState bulletAppState)
     {
         this.bulletAppState = bulletAppState;
@@ -30,23 +32,25 @@ public class PhysicalCharacterAppState extends AbstractAppState {
     private void initChar() {
         // Load any model
         Node myCharacter = (Node) assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+        //myCharacter.setLocalScale(1,0.55f,1);
+        
         
         //create WrapperNode
         Node playerNode = new Node("playernode");
-        playerNode.setLocalTranslation(new Vector3f(-7, 100, 0));
-        
+        playerNode.setLocalTranslation(-7, 50, 0);
         
         //attach nodes
         playerNode.attachChild(myCharacter);
         
         //create player control
-        BetterCharacterControl playerControl = new BetterCharacterControl(3f, myCharacter.getLocalTranslation().y, 1f);
+        BetterCharacterControl playerControl = new BetterCharacterControl(3f, 7f, 1f);
+        playerControl.setGravity(new Vector3f(0f,1.5f,0f));
         playerNode.addControl(playerControl);
+    
         
         //bulletAppState.setDebugEnabled(true);
         
         //attach control and player to physicspace
-        //bulletAppState.getPhysicsSpace().add(playerControl);
         bulletAppState.getPhysicsSpace().add(playerNode);
         
         rootNode.attachChild(playerNode);
