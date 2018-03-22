@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package playercharacter;
 
 import com.jme3.app.Application;
@@ -14,12 +9,10 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.input.InputManager;
+import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
-/**
- *
- * @author Simon Pusterhofer
- */
 public class PhysicalCharacterAppState extends AbstractAppState {
 
     private Node rootNode;
@@ -37,14 +30,26 @@ public class PhysicalCharacterAppState extends AbstractAppState {
     private void initChar() {
         // Load any model
         Node myCharacter = (Node) assetManager.loadModel("Models/Oto/Oto.mesh.xml");
-        myCharacter.setLocalTranslation(0, 100, 0);
-        rootNode.attachChild(myCharacter);
-        // Create a appropriate physical shape for it
-        CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
-        CharacterControl myCharacter_phys = new CharacterControl(capsuleShape, 0.01f);
-        // Attach physical properties to model and PhysicsSpace
-        myCharacter.addControl(myCharacter_phys);
-        bulletAppState.getPhysicsSpace().add(myCharacter_phys);
+        
+        //create WrapperNode
+        Node playerNode = new Node("playernode");
+        playerNode.setLocalTranslation(new Vector3f(-7, 100, 0));
+        
+        
+        //attach nodes
+        playerNode.attachChild(myCharacter);
+        
+        //create player control
+        BetterCharacterControl playerControl = new BetterCharacterControl(3f, myCharacter.getLocalTranslation().y, 1f);
+        playerNode.addControl(playerControl);
+        
+        //bulletAppState.setDebugEnabled(true);
+        
+        //attach control and player to physicspace
+        //bulletAppState.getPhysicsSpace().add(playerControl);
+        bulletAppState.getPhysicsSpace().add(playerNode);
+        
+        rootNode.attachChild(playerNode);
     }
 
     @Override
@@ -57,12 +62,11 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         this.inputManager = app.getInputManager();
         
         initChar();
-
     }
 
     @Override
     public void update(float tpf) {
-        super.update(tpf); //To change body of generated methods, choose Tools | Templates.
+        super.update(tpf);
     }
 
 }
