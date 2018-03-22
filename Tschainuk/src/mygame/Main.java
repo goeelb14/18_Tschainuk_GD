@@ -2,7 +2,6 @@ package mygame;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.PhysicsSpace;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
@@ -22,7 +21,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() 
     {
-        this.bulletAppState = new BulletAppState(PhysicsSpace.BroadphaseType.SIMPLE);
+        this.bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         flyCam.setMoveSpeed(50);
         PhysicalCharacterAppState pca = new PhysicalCharacterAppState(bulletAppState);

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package map;
 
 import com.jme3.app.Application;
@@ -19,10 +14,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-/**
- *
- * @author Paul
- */
 public class MapAppState extends AbstractAppState
 {
     private Node rootNode;
@@ -36,7 +27,7 @@ public class MapAppState extends AbstractAppState
     @Override
     public void initialize(AppStateManager stateManager, Application app) 
     {
-        super.initialize(stateManager, app); //To change body of generated methods, choose Tools | Templates.
+        super.initialize(stateManager, app); 
         rootNode = ((SimpleApplication)app).getRootNode();
         
         Spatial scene =  app.getAssetManager().loadModel("Scenes/entryScene.j3o");
@@ -47,18 +38,22 @@ public class MapAppState extends AbstractAppState
         sun.setDirection(new Vector3f(-1f, -1f, -1.0f).normalizeLocal());
         scene.addLight(sun);
         
-        Spatial terrain = rootNode.getChild("basic");
+        //Spatial terrain = rootNode.getChild("basic");
         
-        CollisionShape cs = CollisionShapeFactory.createMeshShape(terrain);
+        CollisionShape cs = CollisionShapeFactory.createMeshShape((Node) scene);
         RigidBodyControl rbc = new RigidBodyControl(cs, 0);
-        terrain.addControl(rbc);
-        bulletAppState.getPhysicsSpace().addAll(terrain);
+        scene.addControl(rbc);
+        
+        rootNode.attachChild(scene);
+        
+        //bulletAppState.getPhysicsSpace().add(rbc);
+        bulletAppState.getPhysicsSpace().add(scene);
     }
 
     @Override
     public void update(float tpf) 
     {
-        super.update(tpf); //To change body of generated methods, choose Tools | Templates.
+        super.update(tpf); 
     }
     
 }
