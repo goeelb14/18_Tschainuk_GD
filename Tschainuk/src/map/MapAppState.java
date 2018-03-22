@@ -44,10 +44,10 @@ public class MapAppState extends AbstractAppState
         RigidBodyControl rbc = new RigidBodyControl(cs, 0);
         scene.addControl(rbc);
         
-        rootNode.attachChild(scene);
-        
         //bulletAppState.getPhysicsSpace().add(rbc);
         bulletAppState.getPhysicsSpace().add(scene);
+        
+        rootNode.attachChild(scene);
     }
 
     @Override
