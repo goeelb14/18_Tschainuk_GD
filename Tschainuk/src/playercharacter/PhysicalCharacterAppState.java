@@ -8,6 +8,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.input.InputManager;
 import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -33,7 +34,9 @@ public class PhysicalCharacterAppState extends AbstractAppState {
     //Initializes PhysicalCharacter Properties
     private void initChar() {
         // Load any model
-        Node myCharacter = (Node) assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+        Node myCharacter = (Node) assetManager.loadModel("Models/Player/Player.mesh.xml");
+        myCharacter.scale(0.1f);
+        myCharacter.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
         //myCharacter.setLocalScale(1,0.55f,1);
         
         
@@ -50,7 +53,7 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         playerNode.addControl(playerControl);
     
         
-        //bulletAppState.setDebugEnabled(true);
+        bulletAppState.setDebugEnabled(true);
         
         //attach control and player to physicspace
         bulletAppState.getPhysicsSpace().add(playerNode);
@@ -79,7 +82,7 @@ public class PhysicalCharacterAppState extends AbstractAppState {
         Vector3f camDir = flyCam.getDirection();
         Vector3f playerPos = playerNode.getWorldTranslation();
         
-        playerControl.setViewDirection(camDir);
-        flyCam.setLocation(playerPos);
+        //playerControl.setViewDirection(camDir);
+        //flyCam.setLocation(playerPos);
     }
 }
