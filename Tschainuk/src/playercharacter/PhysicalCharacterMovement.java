@@ -6,49 +6,38 @@ import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
-import com.jme3.scene.Node;
 
 public class PhysicalCharacterMovement implements AnalogListener
 {
  
     private BetterCharacterControl playerControl;
     private Camera flyCam;
+    private InputManager inputManager;
     
-    public PhysicalCharacterMovement(BetterCharacterControl playerControl, Camera flyCam)
+    public PhysicalCharacterMovement(BetterCharacterControl playerControl, Camera flyCam, InputManager inputManager)
     {
         this.playerControl = playerControl;
         this.flyCam = flyCam;
-    }
-    
-   
-    @Override
-    public void onAnalog(String name, float value, float tpf) {
-        /*
-         camDir.set(cam.getDirection()).multLocal(speed, 0.0f, speed);
-            camLeft.set(cam.getLeft()).multLocal(strafeSpeed);
-            walkDirection.set(0, 0, 0);
-            if (left) {
-                walkDirection.addLocal(camLeft);
-            }
-            if (right) {
-                walkDirection.addLocal(camLeft.negate());
-            }
-            if (up) {
-                walkDirection.addLocal(camDir);
-            }
-            if (down) {
-                walkDirection.addLocal(camDir.negate());
-            }
-            player.setWalkDirection(walkDirection);
-            
-     
-            cam.setLocation(new Vector3f(PlayerModel.getLocalTranslation().x,PlayerModel.getLocalTranslation().y + headHeight,PlayerModel.getLocalTranslation().z));
-        */
+        this.inputManager = inputManager;
         
+        setupKeys();
     }
     
+    private void setupKeys() {
+        inputManager.addMapping("CharLeft", new KeyTrigger(KeyInput.KEY_A));
+        inputManager.addMapping("CharRight", new KeyTrigger(KeyInput.KEY_D));
+        inputManager.addMapping("CharUp", new KeyTrigger(KeyInput.KEY_W));
+        inputManager.addMapping("CharDown", new KeyTrigger(KeyInput.KEY_S));
+        inputManager.addListener(this, "CharLeft");
+        inputManager.addListener(this, "CharRight");
+        inputManager.addListener(this, "CharUp");
+        inputManager.addListener(this, "CharDown");
+    }
     
-    
+    @Override
+    public void onAnalog(String name, float value, float tpf) 
+    {
+        
+    } 
 }
