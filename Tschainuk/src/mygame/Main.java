@@ -23,7 +23,6 @@ public class Main extends SimpleApplication {
     {
         this.bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        flyCam.setMoveSpeed(50);
         PhysicalCharacterAppState pca = new PhysicalCharacterAppState(bulletAppState);
         MapAppState tt = new MapAppState(bulletAppState);
         stateManager.attach(pca);
