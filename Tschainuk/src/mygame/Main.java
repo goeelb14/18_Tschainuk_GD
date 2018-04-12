@@ -29,6 +29,8 @@ public class Main extends SimpleApplication {
         stateManager.attach(pca);
         stateManager.attach(tt);
         viewPort.setBackgroundColor(ColorRGBA.White);
+        flyCam.setDragToRotate(true);
+        inputManager.setCursorVisible(true);
         }
 
     @Override
