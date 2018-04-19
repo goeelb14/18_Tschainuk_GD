@@ -57,11 +57,9 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         //create player control
         playerControl = new BetterCharacterControl(3f, 7f, 1f);
         playerControl.setGravity(new Vector3f(0f,1.5f,0f));
-        playerNode.addControl(playerControl);
-        playerNode.addControl(new PhysicalCharacterMovementControl(playerControl, flyCam, inputManager));
-    
+        playerNode.addControl(playerControl);    
         
-        //bulletAppState.setDebugEnabled(true);
+        bulletAppState.setDebugEnabled(true);
         
         //attach control and player to physicspace
         bulletAppState.getPhysicsSpace().add(playerNode);
@@ -91,6 +89,8 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         Vector3f camDirFirst = flyCam.getDirection();
         Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0, 7f, 0));
         
+        //playerControl.setViewDirection(camDir);
+        //flyCam.setLocation(playerPos);
         playerControl.setViewDirection(camDirFirst);
         flyCam.setLocation(playerPos);
         
