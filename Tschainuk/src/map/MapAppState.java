@@ -31,6 +31,7 @@ public class MapAppState extends AbstractAppState
         rootNode = ((SimpleApplication)app).getRootNode();
         
         Spatial scene =  app.getAssetManager().loadModel("Scenes/entryScene.j3o");
+        scene.setName("MainScene");
         rootNode.attachChild(scene);
         
         DirectionalLight sun = new DirectionalLight();

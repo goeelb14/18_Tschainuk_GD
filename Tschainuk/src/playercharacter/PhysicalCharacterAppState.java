@@ -16,6 +16,7 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 
 public class PhysicalCharacterAppState extends AbstractAppState implements ActionListener
 {
@@ -25,7 +26,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     private AppStateManager stateManager;
     private InputManager inputManager;
     private Camera flyCam;
-    private Node playerNode = new Node("playernode");
+    private Node playerNode = new Node("MainCharacter");
     private BetterCharacterControl playerControl;
     private Vector3f walkDirection = new Vector3f();
     private ChaseCamera chaseCam;
@@ -45,21 +46,19 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         // Load any model
         Node myCharacter = (Node) assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
         myCharacter.scale(0.036f);
-        
-        
-        //create WrapperNode
-        playerNode.setLocalTranslation(-7, 50, 0);
+        myCharacter.rotate(0, FastMath.DEG_TO_RAD * 180, 0);
         
         //attach nodes
         playerNode.attachChild(myCharacter);
         
+        playerNode.setLocalTranslation(50f, 0, 0);    
         
         //create player control
-        playerControl = new BetterCharacterControl(3f, 7f, 1f);
+        playerControl = new BetterCharacterControl(1f, 7f, 1f);
         playerControl.setGravity(new Vector3f(0f,1.5f,0f));
         playerNode.addControl(playerControl);    
         
-        bulletAppState.setDebugEnabled(true);
+        //bulletAppState.setDebugEnabled(true);
         
         //attach control and player to physicspace
         bulletAppState.getPhysicsSpace().add(playerNode);
@@ -77,8 +76,28 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
         
+        this.flyCam.setAxes(flyCam.getLeft(), flyCam.getUp(), new Vector3f(-1f, 0f, 0f));
+        
         initChar();
         setupKeys();
+        createNpc();
+    }
+    
+    private void createNpc()
+    {
+        Spatial npc = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
+        npc.setName("Npc");
+        npc.scale(0.036f);
+        
+        npc.setLocalTranslation(-50f, 0, 0f);
+        
+        BetterCharacterControl npcControl = new BetterCharacterControl(1f, 7f, 1f);
+        npcControl.setGravity(new Vector3f(0, 1.5f, 0));
+        npc.addControl(npcControl);
+        
+        bulletAppState.getPhysicsSpace().add(npc);
+        
+        rootNode.attachChild(npc);
     }
     
     @Override
@@ -89,10 +108,8 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         Vector3f camDirFirst = flyCam.getDirection();
         Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0, 7f, 0));
         
-        //playerControl.setViewDirection(camDir);
-        //flyCam.setLocation(playerPos);
-        playerControl.setViewDirection(camDirFirst);
         flyCam.setLocation(playerPos);
+        playerControl.setViewDirection(camDirFirst);
         
         
         Vector3f camDir = flyCam.getDirection().clone().multLocal(10f);
@@ -115,6 +132,53 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
             walkDirection.addLocal(camDir.negate());
         }
         playerControl.setWalkDirection(walkDirection);
+        
+//        if(flyCam.getUp().z < -0.75f)
+//            flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, flyCam.getUp().y, -0.75f), flyCam.getDirection());
+//        
+//        if(flyCam.getUp().z > 0.75f)
+//            flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, flyCam.getUp().y, 0.75f), flyCam.getDirection());
+//        
+//        if(flyCam.getUp().x < -0.75f)
+//            flyCam.setAxes(flyCam.getLeft(), new Vector3f(-0.75f, flyCam.getUp().y, flyCam.getUp().z), flyCam.getDirection());
+//
+//        if(flyCam.getUp().x > 0.75f)
+//            flyCam.setAxes(flyCam.getLeft(), new Vector3f(0.75f, flyCam.getUp().y, flyCam.getUp().z), flyCam.getDirection());
+
+//        if(flyCam.getUp().y < 0.75f)
+//           flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, 0.75f, flyCam.getUp().z), flyCam.getDirection());
+        
+//        System.out.println("FlyCam:Up:x" + flyCam.getUp().x);
+//        System.out.println("FlyCam:Up:y" + flyCam.getUp().y);
+//        System.out.println("FlyCam:Up:z" + flyCam.getUp().z);
+//        System.out.println("---------------------------------------");
+
+
+
+        moveNpc();
+    }
+    
+    
+    private void moveNpc()
+    {
+        Spatial npc = rootNode.getChild("Npc");
+        Spatial me = rootNode.getChild("MainCharacter");
+
+        Vector3f lookAtMe = npc.getWorldTranslation().subtract(me.getWorldTranslation());
+        Vector3f followMe = me.getWorldTranslation().subtract(npc.getWorldTranslation());
+        
+        npc.getControl(BetterCharacterControl.class).setViewDirection(lookAtMe);
+        npc.getControl(BetterCharacterControl.class).setWalkDirection(followMe);
+        
+        float dist = npc.getWorldTranslation().distance(me.getWorldTranslation());
+        
+        npc.getControl(BetterCharacterControl.class).setEnabled(true);
+        
+        if(dist < 5f)
+        {
+            npc.getControl(BetterCharacterControl.class).setEnabled(false);
+            npc.getControl(BetterCharacterControl.class).setEnabled(true);
+        }
     }
     
     public void onAction(String name, boolean isPressed, float tpf)
@@ -162,8 +226,6 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
                 moveBack = false;
             }
         }
-        else if(name.equals("CharSpace"))
-            playerControl.jump();
     }
     
     private void setupKeys() {
@@ -171,11 +233,9 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         inputManager.addMapping("CharRight", new KeyTrigger(KeyInput.KEY_D));
         inputManager.addMapping("CharUp", new KeyTrigger(KeyInput.KEY_W));
         inputManager.addMapping("CharDown", new KeyTrigger(KeyInput.KEY_S));
-        inputManager.addMapping("CharSpace", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addListener(this, "CharLeft");
         inputManager.addListener(this, "CharRight");
         inputManager.addListener(this, "CharUp");
         inputManager.addListener(this, "CharDown");
-        inputManager.addListener(this, "CharSpace");
     }
 }
