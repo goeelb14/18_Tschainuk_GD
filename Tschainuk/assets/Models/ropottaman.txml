@@ -1,0 +1,20 @@
+<scene >
+  <entity id="100" >
+    <component sync="1" type="EC_Name" >
+      <attribute name="name" value="Matrix_1.001" />
+      <attribute name="description" value="" />
+    </component>
+    <component sync="1" type="EC_Placeable" >
+      <attribute name="Transform" value="-0.329642,-0.786588,1.053871,90.000009,0.000000,0.000000,1.000000,1.000000,1.000000" />
+      <attribute name="Show bounding box" value="false" />
+      <attribute name="Visible" value="true" />
+      <attribute name="Selection layer" value="1" />
+    </component>
+    <component sync="1" type="EC_Mesh" >
+      <attribute name="Mesh ref" value="Matrix_1.001.mesh" />
+      <attribute name="Mesh materials" value="Roppotta_Man_Material.001.material" />
+      <attribute name="Draw distance" value="0" />
+      <attribute name="Cast shadows" value="false" />
+    </component>
+  </entity>
+</scene>
