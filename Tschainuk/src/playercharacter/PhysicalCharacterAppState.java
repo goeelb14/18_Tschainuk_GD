@@ -8,10 +8,11 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.input.InputManager;
 import com.jme3.bullet.control.BetterCharacterControl;
-import com.jme3.math.FastMath;
+import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -27,6 +28,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     private Node playerNode = new Node("playernode");
     private BetterCharacterControl playerControl;
     private Vector3f walkDirection = new Vector3f();
+    private ChaseCamera chaseCam;
     
     
     
@@ -41,10 +43,8 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     //Initializes PhysicalCharacter Properties
     private void initChar() {
         // Load any model
-        Node myCharacter = (Node) assetManager.loadModel("Models/Player/Player.mesh.xml");
-        myCharacter.scale(0.1f);
-        myCharacter.rotate(FastMath.DEG_TO_RAD*90, 0, 0);
-        //myCharacter.setLocalScale(1,0.55f,1);
+        Node myCharacter = (Node) assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
+        myCharacter.scale(0.036f);
         
         
         //create WrapperNode
@@ -57,8 +57,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         //create player control
         playerControl = new BetterCharacterControl(3f, 7f, 1f);
         playerControl.setGravity(new Vector3f(0f,1.5f,0f));
-        playerNode.addControl(playerControl);
-    
+        playerNode.addControl(playerControl);    
         
         bulletAppState.setDebugEnabled(true);
         
@@ -79,15 +78,16 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         this.flyCam = app.getCamera();
         
         initChar();
+        setupKeys();
     }
-
+    
     @Override
     public void update(float tpf) 
     {
         super.update(tpf);
         
         Vector3f camDirFirst = flyCam.getDirection();
-        Vector3f playerPos = playerNode.getWorldTranslation();
+        Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0, 7f, 0));
         
         //playerControl.setViewDirection(camDir);
         //flyCam.setLocation(playerPos);
@@ -95,8 +95,8 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         flyCam.setLocation(playerPos);
         
         
-        Vector3f camDir = flyCam.getDirection().clone().multLocal(0.1f);
-        Vector3f camLeft = flyCam.getLeft().clone().multLocal(0.1f);
+        Vector3f camDir = flyCam.getDirection().clone().multLocal(10f);
+        Vector3f camLeft = flyCam.getLeft().clone().multLocal(10f);
         
         camDir.y = 0f;
         camLeft.y = 0f;
@@ -178,6 +178,4 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         inputManager.addListener(this, "CharDown");
         inputManager.addListener(this, "CharSpace");
     }
-
-    
 }
