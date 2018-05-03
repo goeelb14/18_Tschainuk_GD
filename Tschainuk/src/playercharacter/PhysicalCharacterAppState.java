@@ -13,6 +13,7 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -44,9 +45,10 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     //Initializes PhysicalCharacter Properties
     private void initChar() {
         // Load any model
-        Node myCharacter = (Node) assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
-        myCharacter.scale(0.036f);
-        myCharacter.rotate(0, FastMath.DEG_TO_RAD * 180, 0);
+        Node myCharacter = (Node) assetManager.loadModel("Models/Player/Player.mesh.xml");
+        myCharacter.scale(0.09f);
+        myCharacter.rotate(FastMath.DEG_TO_RAD * 90, FastMath.DEG_TO_RAD * 90, 0);
+        myCharacter.move(new Vector3f(0f, 3f, 0f));
         
         //attach nodes
         playerNode.attachChild(myCharacter);
@@ -54,9 +56,9 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         playerNode.setLocalTranslation(50f, 0, 0);    
         
         //create player control
-        playerControl = new BetterCharacterControl(1f, 7f, 1f);
+        playerControl = new BetterCharacterControl(1.3f, 6f, 1f);
         playerControl.setGravity(new Vector3f(0f,1.5f,0f));
-        playerNode.addControl(playerControl);    
+        playerNode.addControl(playerControl);
         
         //bulletAppState.setDebugEnabled(true);
         
@@ -75,8 +77,6 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
-        
-        this.flyCam.setAxes(flyCam.getLeft(), flyCam.getUp(), new Vector3f(-1f, 0f, 0f));
         
         initChar();
         setupKeys();
@@ -106,7 +106,8 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         super.update(tpf);
         
         Vector3f camDirFirst = flyCam.getDirection();
-        Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0, 7f, 0));
+        Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0f, 5.7f, 0f));
+        System.out.println(camDirFirst);
         
         flyCam.setLocation(playerPos);
         playerControl.setViewDirection(camDirFirst);
