@@ -30,14 +30,14 @@ public class MapAppState extends AbstractAppState
         super.initialize(stateManager, app); 
         rootNode = ((SimpleApplication)app).getRootNode();
         
-        Spatial scene =  app.getAssetManager().loadModel("Scenes/entryScene.j3o");
+        Spatial scene =  app.getAssetManager().loadModel("Scenes/entryLevel.scene");
         scene.setName("MainScene");
         rootNode.attachChild(scene);
         
         DirectionalLight sun = new DirectionalLight();
         sun.setColor(ColorRGBA.White);
         sun.setDirection(new Vector3f(-1f, -1f, -1.0f).normalizeLocal());
-        scene.addLight(sun);
+        rootNode.addLight(sun);
         
         //Spatial terrain = rootNode.getChild("basic");
         
