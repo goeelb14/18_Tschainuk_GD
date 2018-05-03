@@ -12,9 +12,10 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -32,6 +33,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     private BetterCharacterControl playerControl;
     private Vector3f walkDirection = new Vector3f();
     private ChaseCamera chaseCam;
+    private DirectionalLight sun = new DirectionalLight();
     
     
     
@@ -47,9 +49,9 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     private void initChar() {
         // Load any model
         Node myCharacter = (Node) assetManager.loadModel("Models/Player/Player.mesh.xml");
-        myCharacter.scale(0.09f);
+        myCharacter.scale(0.045f);
         myCharacter.rotate(FastMath.DEG_TO_RAD * 90, FastMath.DEG_TO_RAD * 90, 0);
-        myCharacter.move(new Vector3f(0f, 3f, 0f));
+        myCharacter.move(new Vector3f(0f, 1.5f, 0f));
         
         //attach nodes
         playerNode.attachChild(myCharacter);
@@ -57,12 +59,12 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         playerNode.setLocalTranslation(50f, 0, 0);    
         
         //create player control
-        playerControl = new BetterCharacterControl(1.3f, 6f, 1f);
+        playerControl = new BetterCharacterControl(0.65f, 3f, 1f);
         playerControl.setGravity(new Vector3f(0f,1.5f,0f));
         playerNode.addControl(playerControl);
         
-        bulletAppState.setDebugEnabled(true);
-        
+        //bulletAppState.setDebugEnabled(true);
+
         //attach control and player to physicspace
         bulletAppState.getPhysicsSpace().add(playerNode);
         
@@ -79,6 +81,8 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
         
+        rootNode.addLight(sun);
+        
         initChar();
         setupKeys();
         createNpc();
@@ -87,19 +91,21 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     private void createNpc()
     {
         Spatial npc = assetManager.loadModel("Textures/Hadler.obj");
-        npc.setName("Npc");
-        npc.scale(0.5f);
+        npc.scale(0.15f);
+        npc.rotate(0f, FastMath.DEG_TO_RAD * 270, 0);
   
+        Node npcNode = new Node("Npc");
+        npcNode.attachChild(npc);
         
-        npc.setLocalTranslation(-50f, 100F, 0f);
+        npcNode.setLocalTranslation(-10f, 0f, 0f);
         
-        BetterCharacterControl npcControl = new BetterCharacterControl(1f, 7f, 1f);
+        BetterCharacterControl npcControl = new BetterCharacterControl(0.825f, 2.2f, 1f);
         npcControl.setGravity(new Vector3f(0, 1.5f, 0));
-        npc.addControl(npcControl);
+        npcNode.addControl(npcControl);
         
-        bulletAppState.getPhysicsSpace().add(npc);
+        bulletAppState.getPhysicsSpace().add(npcNode);
         
-        rootNode.attachChild(npc);
+        rootNode.attachChild(npcNode);
     }
     
     @Override
@@ -108,7 +114,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         super.update(tpf);
         
         Vector3f camDirFirst = flyCam.getDirection();
-        Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0f, 5.7f, 0f));
+        Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0f, 2.85f, 0f));
         System.out.println(camDirFirst);
         
         flyCam.setLocation(playerPos);
@@ -120,6 +126,9 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         
         camDir.y = 0f;
         camLeft.y = 0f;
+        
+        sun.setColor(ColorRGBA.White);
+        sun.setDirection(playerControl.getViewDirection());
         
         walkDirection.set(0, 0, 0);
         if (moveLeft) {
