@@ -97,7 +97,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         Node npcNode = new Node("Npc");
         npcNode.attachChild(npc);
         
-        npcNode.setLocalTranslation(-10f, 0f, 0f);
+        npcNode.setLocalTranslation(-15f, 0f, 0f);
         
         BetterCharacterControl npcControl = new BetterCharacterControl(0.825f, 2.2f, 1f);
         npcControl.setGravity(new Vector3f(0, 1.5f, 0));
