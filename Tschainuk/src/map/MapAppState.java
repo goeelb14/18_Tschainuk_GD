@@ -37,14 +37,12 @@ public class MapAppState extends AbstractAppState
         sun.setColor(ColorRGBA.White);
         sun.setDirection(new Vector3f(-1f, -1f, -1.0f).normalizeLocal());
         rootNode.addLight(sun);
-<<<<<<< HEAD
-=======
+
         
         DirectionalLight sun2 = new DirectionalLight();
         sun.setColor(ColorRGBA.White);
         sun.setDirection(new Vector3f(-1f, -1f, -1.0f).normalizeLocal().negate());
         rootNode.addLight(sun2);
->>>>>>> 8b71ffe8ef061ec25cf292a1960ba346680bfb6c
         
         //Spatial terrain = rootNode.getChild("basic");
         

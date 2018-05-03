@@ -12,6 +12,7 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.material.Material;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
@@ -60,7 +61,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         playerControl.setGravity(new Vector3f(0f,1.5f,0f));
         playerNode.addControl(playerControl);
         
-        //bulletAppState.setDebugEnabled(true);
+        bulletAppState.setDebugEnabled(true);
         
         //attach control and player to physicspace
         bulletAppState.getPhysicsSpace().add(playerNode);
@@ -85,11 +86,12 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     
     private void createNpc()
     {
-        Spatial npc = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
+        Spatial npc = assetManager.loadModel("Textures/Hadler.obj");
         npc.setName("Npc");
-        npc.scale(0.036f);
+        npc.scale(0.5f);
+  
         
-        npc.setLocalTranslation(-50f, 0, 0f);
+        npc.setLocalTranslation(-50f, 100F, 0f);
         
         BetterCharacterControl npcControl = new BetterCharacterControl(1f, 7f, 1f);
         npcControl.setGravity(new Vector3f(0, 1.5f, 0));
