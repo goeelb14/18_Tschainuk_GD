@@ -8,54 +8,87 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.input.InputManager;
 import com.jme3.bullet.control.BetterCharacterControl;
-import com.jme3.input.ChaseCamera;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.DirectionalLight;
-import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 
 public class PhysicalCharacterAppState extends AbstractAppState implements ActionListener
 {
+    //MainApplication Attributes
     private Node rootNode;
     private AssetManager assetManager;
     private BulletAppState bulletAppState;
     private AppStateManager stateManager;
     private InputManager inputManager;
     private Camera flyCam;
-    private Node playerNode = new Node("MainCharacter");
+    
+    //LocalAttributes
+    private Node playerNode;
     private BetterCharacterControl playerControl;
-    private Vector3f walkDirection = new Vector3f();
-    private ChaseCamera chaseCam;
-    private DirectionalLight sun = new DirectionalLight();
-    
-    
+    private Vector3f walkDirection;
+    private DirectionalLight sun;
     
     //Attributes for Movement
     private boolean moveLeft, moveRight, moveForward, moveBack;
     
+    //Constructor
     public PhysicalCharacterAppState(BulletAppState bulletAppState)
     {
         this.bulletAppState = bulletAppState;
+        this.playerNode = new Node("MainCharacter");
+        this.sun = new DirectionalLight();
+        this.walkDirection = new Vector3f();
     }
 
-    //Initializes PhysicalCharacter Properties
-    private void initChar() {
+    //Prepare Main Character
+    @Override
+    public void initialize(AppStateManager stateManager, Application app)
+    {
+        super.initialize(stateManager, app);
+        
+        this.assetManager = app.getAssetManager();
+        this.rootNode = ((SimpleApplication) app).getRootNode();
+        this.stateManager = stateManager;
+        this.inputManager = app.getInputManager();
+        this.flyCam = app.getCamera();
+        
+        rootNode.addLight(sun);
+        
+        initChar();
+        setupKeys();
+    }
+    
+    @Override
+    public void update(float tpf) 
+    {
+        super.update(tpf);
+        
+        setFirstPersonCam();
+        setLighting();
+        setWalkingDirection();
+    }
+    
+    //Initializes Playcharacter
+    private void initChar() 
+    {
         // Load any model
         Node myCharacter = (Node) assetManager.loadModel("Models/Player/Player.mesh.xml");
+        
+        //Correctly Allign Player
         myCharacter.scale(0.045f);
         myCharacter.rotate(FastMath.DEG_TO_RAD * 90, FastMath.DEG_TO_RAD * 90, 0);
         myCharacter.move(new Vector3f(0f, 1.5f, 0f));
         
-        //attach nodes
+        //attach player to  wrappernode
         playerNode.attachChild(myCharacter);
         
+        //Position Player
         playerNode.setLocalTranslation(50f, 0, 0);    
         
         //create player control
@@ -65,70 +98,55 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         
         //bulletAppState.setDebugEnabled(true);
 
-        //attach control and player to physicspace
+        //attach player to physicspace
         bulletAppState.getPhysicsSpace().add(playerNode);
         
+        //attach wrapper to rootnode
         rootNode.attachChild(playerNode);
     }
-
-    @Override
-    public void initialize(AppStateManager stateManager, Application app) {
-        super.initialize(stateManager, app);
-        assetManager = app.getAssetManager();
-        rootNode = ((SimpleApplication) app).getRootNode();
-
-        this.stateManager = stateManager;
-        this.inputManager = app.getInputManager();
-        this.flyCam = app.getCamera();
+    
+    private void setMaxFirstPersonCamMovableAngle()
+    {
+        if(flyCam.getUp().z < -0.75f)
+            flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, flyCam.getUp().y, -0.75f), flyCam.getDirection());
         
-        rootNode.addLight(sun);
+        if(flyCam.getUp().z > 0.75f)
+            flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, flyCam.getUp().y, 0.75f), flyCam.getDirection());
         
-        initChar();
-        setupKeys();
-        createNpc();
+        if(flyCam.getUp().x < -0.75f)
+            flyCam.setAxes(flyCam.getLeft(), new Vector3f(-0.75f, flyCam.getUp().y, flyCam.getUp().z), flyCam.getDirection());
+
+        if(flyCam.getUp().x > 0.75f)
+            flyCam.setAxes(flyCam.getLeft(), new Vector3f(0.75f, flyCam.getUp().y, flyCam.getUp().z), flyCam.getDirection());
+
+        if(flyCam.getUp().y < 0.75f)
+           flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, 0.75f, flyCam.getUp().z), flyCam.getDirection());
+        
+        System.out.println("FlyCam:Up:x" + flyCam.getUp().x);
+        System.out.println("FlyCam:Up:y" + flyCam.getUp().y);
+        System.out.println("FlyCam:Up:z" + flyCam.getUp().z);
+        System.out.println("---------------------------------------");
     }
     
-    private void createNpc()
+    //set cam to first person location of Player
+    private void setFirstPersonCam()
     {
-        Spatial npc = assetManager.loadModel("Textures/Hadler.obj");
-        npc.scale(0.15f);
-        npc.rotate(0f, FastMath.DEG_TO_RAD * 270, 0);
-  
-        Node npcNode = new Node("Npc");
-        npcNode.attachChild(npc);
-        
-        npcNode.setLocalTranslation(-15f, 0f, 0f);
-        
-        BetterCharacterControl npcControl = new BetterCharacterControl(0.825f, 2.2f, 1f);
-        npcControl.setGravity(new Vector3f(0, 1.5f, 0));
-        npcNode.addControl(npcControl);
-        
-        bulletAppState.getPhysicsSpace().add(npcNode);
-        
-        rootNode.attachChild(npcNode);
-    }
-    
-    @Override
-    public void update(float tpf) 
-    {
-        super.update(tpf);
-        
         Vector3f camDirFirst = flyCam.getDirection();
         Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0f, 2.85f, 0f));
         System.out.println(camDirFirst);
         
         flyCam.setLocation(playerPos);
         playerControl.setViewDirection(camDirFirst);
-        
-        
+    }
+    
+    //set walking direction of player
+    private void setWalkingDirection()
+    {
         Vector3f camDir = flyCam.getDirection().clone().multLocal(10f);
         Vector3f camLeft = flyCam.getLeft().clone().multLocal(10f);
         
         camDir.y = 0f;
         camLeft.y = 0f;
-        
-        sun.setColor(ColorRGBA.White);
-        sun.setDirection(playerControl.getViewDirection());
         
         walkDirection.set(0, 0, 0);
         if (moveLeft) {
@@ -144,55 +162,16 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
             walkDirection.addLocal(camDir.negate());
         }
         playerControl.setWalkDirection(walkDirection);
-        
-//        if(flyCam.getUp().z < -0.75f)
-//            flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, flyCam.getUp().y, -0.75f), flyCam.getDirection());
-//        
-//        if(flyCam.getUp().z > 0.75f)
-//            flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, flyCam.getUp().y, 0.75f), flyCam.getDirection());
-//        
-//        if(flyCam.getUp().x < -0.75f)
-//            flyCam.setAxes(flyCam.getLeft(), new Vector3f(-0.75f, flyCam.getUp().y, flyCam.getUp().z), flyCam.getDirection());
-//
-//        if(flyCam.getUp().x > 0.75f)
-//            flyCam.setAxes(flyCam.getLeft(), new Vector3f(0.75f, flyCam.getUp().y, flyCam.getUp().z), flyCam.getDirection());
-
-//        if(flyCam.getUp().y < 0.75f)
-//           flyCam.setAxes(flyCam.getLeft(), new Vector3f(flyCam.getUp().x, 0.75f, flyCam.getUp().z), flyCam.getDirection());
-        
-//        System.out.println("FlyCam:Up:x" + flyCam.getUp().x);
-//        System.out.println("FlyCam:Up:y" + flyCam.getUp().y);
-//        System.out.println("FlyCam:Up:z" + flyCam.getUp().z);
-//        System.out.println("---------------------------------------");
-
-
-
-        moveNpc();
     }
     
-    
-    private void moveNpc()
+    //set lighting depending on player
+    private void setLighting()
     {
-        Spatial npc = rootNode.getChild("Npc");
-        Spatial me = rootNode.getChild("MainCharacter");
-
-        Vector3f lookAtMe = npc.getWorldTranslation().subtract(me.getWorldTranslation());
-        Vector3f followMe = me.getWorldTranslation().subtract(npc.getWorldTranslation());
-        
-        npc.getControl(BetterCharacterControl.class).setViewDirection(lookAtMe);
-        npc.getControl(BetterCharacterControl.class).setWalkDirection(followMe);
-        
-        float dist = npc.getWorldTranslation().distance(me.getWorldTranslation());
-        
-        npc.getControl(BetterCharacterControl.class).setEnabled(true);
-        
-        if(dist < 5f)
-        {
-            npc.getControl(BetterCharacterControl.class).setEnabled(false);
-            npc.getControl(BetterCharacterControl.class).setEnabled(true);
-        }
+        sun.setColor(ColorRGBA.White);
+        sun.setDirection(playerControl.getViewDirection());
     }
     
+    //get pressed keys from player to control him
     public void onAction(String name, boolean isPressed, float tpf)
     {
         if (name.equals("CharLeft")) 
@@ -240,6 +219,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         }
     }
     
+    //define keys that are used for movement
     private void setupKeys() {
         inputManager.addMapping("CharLeft", new KeyTrigger(KeyInput.KEY_A));
         inputManager.addMapping("CharRight", new KeyTrigger(KeyInput.KEY_D));
