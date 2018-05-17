@@ -1,5 +1,6 @@
 package mygame;
 
+import action.GunActionAppState;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.ColorRGBA;
@@ -35,11 +36,13 @@ public class Main extends SimpleApplication
         MapAppState mas = new MapAppState(bulletAppState);
         NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState);
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
+        GunActionAppState gaas = new GunActionAppState();
         
         stateManager.attach(pcas);
         stateManager.attach(mas);
         stateManager.attach(hudas);
         stateManager.attach(ncas);
+        stateManager.attach(gaas);
     }
     
     private void attachBulletAppState()

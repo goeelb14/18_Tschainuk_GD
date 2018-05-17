@@ -133,7 +133,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     {
         Vector3f camDirFirst = flyCam.getDirection();
         Vector3f playerPos = playerNode.getWorldTranslation().add(new Vector3f(0f, 2.85f, 0f));
-        System.out.println(camDirFirst);
+        //System.out.println(camDirFirst);
         
         flyCam.setLocation(playerPos);
         playerControl.setViewDirection(camDirFirst);
