@@ -55,7 +55,7 @@ public class NpcCharacterAppState extends AbstractAppState
         Spatial npc = assetManager.loadModel("Textures/Hadler.obj");
         npc.scale(0.15f);
         npc.rotate(0f, FastMath.DEG_TO_RAD * 270, 0);
-  
+        
         Node npcNode = new Node("Npc");
         npcNode.attachChild(npc);
         

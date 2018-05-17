@@ -8,6 +8,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
+import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -34,15 +35,33 @@ public class MapAppState extends AbstractAppState
         scene.setName("MainScene");
         
         DirectionalLight sun = new DirectionalLight();
-        sun.setColor(ColorRGBA.White);
-        sun.setDirection(new Vector3f(-1f, -1f, -1.0f).normalizeLocal());
+        sun.setColor(ColorRGBA.White.mult(0.3f));
+        sun.setDirection(new Vector3f(0f, -1f, 0f).normalizeLocal());
         rootNode.addLight(sun);
-
         
         DirectionalLight sun2 = new DirectionalLight();
-        sun.setColor(ColorRGBA.White);
-        sun.setDirection(new Vector3f(-1f, -1f, -1.0f).normalizeLocal().negate());
+        sun2.setColor(ColorRGBA.White.mult(0.4f));
+        sun2.setDirection(new Vector3f(1f, 0f, 0f).normalizeLocal());
         rootNode.addLight(sun2);
+        
+        DirectionalLight sun3 = new DirectionalLight();
+        sun3.setColor(ColorRGBA.White.mult(0.4f));
+        sun3.setDirection(new Vector3f(-1f, 0f, 0f).normalizeLocal());
+        rootNode.addLight(sun3);
+        
+        DirectionalLight sun4 = new DirectionalLight();
+        sun4.setColor(ColorRGBA.White.mult(0.4f));
+        sun4.setDirection(new Vector3f(0f, 0f, 1f).normalizeLocal());
+        rootNode.addLight(sun4);
+        
+        DirectionalLight sun5 = new DirectionalLight();
+        sun5.setColor(ColorRGBA.White.mult(0.4f));
+        sun5.setDirection(new Vector3f(0f, 0f, -1f).normalizeLocal());
+        rootNode.addLight(sun5);
+        
+        AmbientLight al = new AmbientLight();
+        al.setColor(ColorRGBA.White.mult(0.3f));
+        rootNode.addLight(al);
         
         //Spatial terrain = rootNode.getChild("basic");
         
