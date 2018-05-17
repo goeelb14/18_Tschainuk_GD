@@ -70,7 +70,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         super.update(tpf);
         
         setFirstPersonCam();
-        setLighting();
+        //setLighting();
         setWalkingDirection();
     }
     
@@ -167,7 +167,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     //set lighting depending on player
     private void setLighting()
     {
-        sun.setColor(ColorRGBA.White);
+        sun.setColor(ColorRGBA.White.mult(0.5f));
         sun.setDirection(playerControl.getViewDirection());
     }
     
