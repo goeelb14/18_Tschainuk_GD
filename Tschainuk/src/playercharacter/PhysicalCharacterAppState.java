@@ -11,8 +11,6 @@ import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.light.DirectionalLight;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -32,17 +30,15 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     private Node playerNode;
     private BetterCharacterControl playerControl;
     private Vector3f walkDirection;
-    private DirectionalLight sun;
     
     //Attributes for Movement
-    private boolean moveLeft, moveRight, moveForward, moveBack;
+    private boolean moveLeft, moveRight, moveForward, moveBack, sprint;
     
     //Constructor
     public PhysicalCharacterAppState(BulletAppState bulletAppState)
     {
         this.bulletAppState = bulletAppState;
         this.playerNode = new Node("MainCharacter");
-        this.sun = new DirectionalLight();
         this.walkDirection = new Vector3f();
     }
 
@@ -57,9 +53,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
-        
-        rootNode.addLight(sun);
-        
+                
         initChar();
         setupKeys();
     }
@@ -69,9 +63,8 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
     {
         super.update(tpf);
         
-        setFirstPersonCam();
-        //setLighting();
         setWalkingDirection();
+        setFirstPersonCam();
     }
     
     //Initializes Playcharacter
@@ -89,17 +82,17 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         playerNode.attachChild(myCharacter);
         
         //Position Player
-        playerNode.setLocalTranslation(50f, 0, 0);    
+        playerNode.setLocalTranslation(50f, 0, 0); 
         
         //create player control
-        playerControl = new BetterCharacterControl(0.65f, 3f, 1f);
-        playerControl.setGravity(new Vector3f(0f,1.5f,0f));
+        playerControl = new BetterCharacterControl(1.15f, 3f, 100f);
         playerNode.addControl(playerControl);
         
-        //bulletAppState.setDebugEnabled(true);
+       // bulletAppState.setDebugEnabled(true);
 
         //attach player to physicspace
         bulletAppState.getPhysicsSpace().add(playerNode);
+        bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -100f, 0));
         
         //attach wrapper to rootnode
         rootNode.attachChild(playerNode);
@@ -161,14 +154,12 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         if (moveBack) {
             walkDirection.addLocal(camDir.negate());
         }
+        if(sprint && moveForward)
+        {
+            camDir = camDir.multLocal(1.1f);
+            walkDirection.addLocal(camDir);
+        }
         playerControl.setWalkDirection(walkDirection);
-    }
-    
-    //set lighting depending on player
-    private void setLighting()
-    {
-        sun.setColor(ColorRGBA.White.mult(0.5f));
-        sun.setDirection(playerControl.getViewDirection());
     }
     
     //get pressed keys from player to control him
@@ -217,6 +208,17 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
                 moveBack = false;
             }
         }
+        else if(name.equals("CharLeftShift"))
+        {
+            if(isPressed)
+            {
+                sprint = true;
+            }
+            else
+            {
+                sprint = false;
+            }
+        }
     }
     
     //define keys that are used for movement
@@ -225,9 +227,11 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         inputManager.addMapping("CharRight", new KeyTrigger(KeyInput.KEY_D));
         inputManager.addMapping("CharUp", new KeyTrigger(KeyInput.KEY_W));
         inputManager.addMapping("CharDown", new KeyTrigger(KeyInput.KEY_S));
+        inputManager.addMapping("CharLeftShift", new KeyTrigger(KeyInput.KEY_LSHIFT));
         inputManager.addListener(this, "CharLeft");
         inputManager.addListener(this, "CharRight");
         inputManager.addListener(this, "CharUp");
         inputManager.addListener(this, "CharDown");
+        inputManager.addListener(this, "CharLeftShift");
     }
 }
