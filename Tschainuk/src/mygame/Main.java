@@ -7,8 +7,8 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
 import map.MapAppState;
 import overlay.HeadsUpDisplayAppState;
-import playercharacter.NpcCharacterAppState;
-import playercharacter.PhysicalCharacterAppState;
+import character.NpcCharacterAppState;
+import character.PhysicalCharacterAppState;
 
 public class Main extends SimpleApplication
 {
