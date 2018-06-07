@@ -9,6 +9,9 @@ import map.MapAppState;
 import overlay.HeadsUpDisplayAppState;
 import character.NpcCharacterAppState;
 import character.PhysicalCharacterAppState;
+import com.jme3.niftygui.NiftyJmeDisplay;
+import de.lessvoid.nifty.Nifty;
+import display.HudDisplay;
 
 public class Main extends SimpleApplication
 {
@@ -28,6 +31,18 @@ public class Main extends SimpleApplication
         
         viewPort.setBackgroundColor(ColorRGBA.White);
         flyCam.setMoveSpeed(50);
+    }
+    HudDisplay di;
+    public void niftyInit()
+    {
+        NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, guiViewPort);
+         di= new HudDisplay();
+        Nifty nifty = niftyDisplay.getNifty();
+
+        guiViewPort.addProcessor(niftyDisplay);
+        
+       nifty.fromXml("HUDXML.xml", "start", di);
+        
     }
     
     private void addAppStates()
