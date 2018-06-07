@@ -11,7 +11,7 @@ import character.NpcCharacterAppState;
 import character.PhysicalCharacterAppState;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
-import display.HudDisplay;
+import overlay.HudDisplay;
 
 public class Main extends SimpleApplication
 {
