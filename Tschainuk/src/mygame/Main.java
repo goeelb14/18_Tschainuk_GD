@@ -51,7 +51,7 @@ public class Main extends SimpleApplication
         MapAppState mas = new MapAppState(bulletAppState);
         NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState);
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
-        GunActionAppState gaas = new GunActionAppState();
+        GunActionAppState gaas = new GunActionAppState(bulletAppState);
         
         stateManager.attach(pcas);
         stateManager.attach(mas);
