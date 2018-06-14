@@ -16,6 +16,7 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import fight.NpcStatus;
 
 public class GunActionAppState extends AbstractAppState implements ActionListener
 {
@@ -25,6 +26,8 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     private AppStateManager stateManager;
     private InputManager inputManager;
     private Camera cam;
+    
+    private NpcStatus npcStatus;
     
     @Override
     public void initialize(AppStateManager stateManager, Application app)
@@ -36,6 +39,8 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
+        
+        npcStatus = new NpcStatus();
         
         setUpMouseButton();
     }
