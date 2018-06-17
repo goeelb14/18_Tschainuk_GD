@@ -25,6 +25,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import java.util.LinkedList;
 import java.util.List;
+import fight.NpcStatus;
 
 public class GunActionAppState extends AbstractAppState implements ActionListener, PhysicsTickListener
 {
@@ -44,6 +45,8 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         this.bulletAppState = bulletAppState;
     }
     
+    private NpcStatus npcStatus;
+    
     @Override
     public void initialize(AppStateManager stateManager, Application app)
     {
@@ -54,7 +57,9 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
-                
+                        
+        npcStatus = new NpcStatus();
+        
         setUpMouseButton();
     }
     
@@ -114,7 +119,7 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         {
             for (Geometry geom : geoms)
             {
-                geom.getControl(RigidBodyControl.class).setLinearVelocity();
+                geom.getControl(RigidBodyControl.class).setLinearVelocity(new Vector3f(0, 0, 0));
                 geom.getControl(RigidBodyControl.class).applyImpulse(flugbahn, Vector3f.ZERO);
             }
         }
