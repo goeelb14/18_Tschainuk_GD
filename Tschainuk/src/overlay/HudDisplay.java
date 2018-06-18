@@ -14,8 +14,11 @@ import com.jme3.asset.AssetManager;
 import com.jme3.audio.AudioNode;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Node;
+import com.jme3.scene.control.Control;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.NiftyControl;
+import de.lessvoid.nifty.controls.label.LabelControl;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.render.NiftyImage;
@@ -54,6 +57,7 @@ public class HudDisplay extends AbstractAppState implements ScreenController, Ob
   public void bind(Nifty nifty, Screen screen) {
         this.nifty = nifty;
         this.screen = screen;
+       ;
   }
   
   
@@ -84,10 +88,19 @@ public class HudDisplay extends AbstractAppState implements ScreenController, Ob
     @Override
     public void update(Observable o, Object o1) 
     {
+        
        CharacterGameStats cgs= (CharacterGameStats)o;
-       screen.findElementById("lblLevel").getRenderer(TextRenderer.class).setText("Current Level: "+cgs.getBaseStat(StatEnum.Level));
-       String hptext = "Current HP: "+cgs.getBaseStat(StatEnum.HPNow)+"/" + cgs.getBaseStat(StatEnum.HPMax);
-        screen.findElementById("lblLevel").getRenderer(TextRenderer.class).setText(hptext);
+       
+        System.out.println(nifty); 
+       Label lblLevel= nifty.getScreen("HUDScreen").findNiftyControl("lblLevel", Label.class);
+        System.out.println(lblLevel);
+       lblLevel.setText("Current Level: " + cgs.getStat(StatEnum.Level));
+       Label lblHP= screen.findNiftyControl("lblHP", Label.class);
+       lblHP.setText("Current HP: " + cgs.getStat(StatEnum.HPNow)+"/"+cgs.getStat(StatEnum.HPMax));
+       Element e= screen.findElementById("lifeBar");
+       int eleWidth=cgs.getBaseStat(StatEnum.HPNow)/cgs.getStat(StatEnum.HPMax)*294;
+       e.setWidth(eleWidth);
+       
        
     }
 }

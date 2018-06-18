@@ -62,7 +62,7 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
                         
-        npcStatus = new NpcStatus();
+       // npcStatus = new NpcStatus();
         
         setUpMouseButton();
     }

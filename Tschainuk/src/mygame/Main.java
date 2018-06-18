@@ -36,13 +36,14 @@ public class Main extends SimpleApplication
     @Override
     public void simpleInitApp()
     {
-        
+        niftyInit();
         attachBulletAppState();
+        
         addAppStates();
         
         viewPort.setBackgroundColor(ColorRGBA.White);
         flyCam.setMoveSpeed(50);
-        niftyInit();
+        
         
         
     }
@@ -88,7 +89,7 @@ public class Main extends SimpleApplication
     {
         PhysicalCharacterAppState pcas = new PhysicalCharacterAppState(bulletAppState);
         MapAppState mas = new MapAppState(bulletAppState);
-        NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState);
+        NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState, hud);
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
         GunActionAppState gaas = new GunActionAppState(bulletAppState);
         

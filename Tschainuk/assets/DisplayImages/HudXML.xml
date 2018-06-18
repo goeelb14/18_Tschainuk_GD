@@ -22,10 +22,16 @@
                 <panel width="450" height="*"></panel> 
                 <panel  height="*" childLayout="vertical" >
                  <panel childLayout="horizontal">   
-                     <control id= "lblLevel" name="label" text="Current Level: 1" textHAlign="left"<!-- font="Interface/Fonts/BitmapFont1.fnt"-->></control>
+                     <control id= "lblLevel" name="label"  text="Current Level: 1"></control>
                  </panel>
                  <panel childLayout="horizontal">
-                     <control id="lblHP" name="label" text="Current HP: "></control>
+                     <control id="lblHP" name="label" text="Current HP: 20/20 "></control>
+                     
+                 </panel>
+                 <panel childLayout="center" backgroundColor="#000000" height="30" width="300">
+                     <panel childLayout="horizontal" height="24" width="294">
+                       <panel id="lifeBar" height="*" width="*"   backgroundColor="#1cae1c"/>
+                     </panel>
                  </panel>
                      
                      

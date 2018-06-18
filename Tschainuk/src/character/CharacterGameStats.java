@@ -79,7 +79,8 @@ public class CharacterGameStats extends Observable{
        
         
         updateStats();
-        this.notifyAll();
+        setChanged();
+        this.notifyObservers();
     }
     public void updateStats()
     {
@@ -95,7 +96,8 @@ public class CharacterGameStats extends Observable{
         {
             totalStats.put(StatEnum.HPNow,totalStats.get(StatEnum.HPMax));
         }
-        this.notifyAll();
+        setChanged();
+        this.notifyObservers();
     }
    public void applyMod(SkillModifier mod)
    {
@@ -111,7 +113,8 @@ public class CharacterGameStats extends Observable{
        {
             totalStats.put(mod.getAffectedStat(), 3);
        }
-       this.notifyAll();
+       setChanged();
+       this.notifyObservers();
    }
     public void addModifier(SkillModifier mod)
     {
@@ -166,9 +169,11 @@ public class CharacterGameStats extends Observable{
      
    public void addObserver(Observer o)
    {
-       this.addObserver(o);
-       this.notifyAll();
+      
+       super.addObserver(o);
+       
        
    }
+  
     
 }

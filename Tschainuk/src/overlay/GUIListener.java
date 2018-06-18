@@ -5,6 +5,7 @@
  */
 package overlay;
 
+import character.CharacterGameStats;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
@@ -23,11 +24,13 @@ public class GUIListener implements ActionListener{
     private int counter = 0;
    private StartDisplay di;
     private HudDisplay hud;
+ 
     public GUIListener(ViewPort guiViewPort, NiftyJmeDisplay niftyDisplay, HudDisplay hud) {
         vp= guiViewPort;
         this.niftyDisplay=niftyDisplay;
       this.hud=hud;
       di= new StartDisplay(niftyDisplay);
+     
        
     }
 
@@ -57,6 +60,8 @@ public class GUIListener implements ActionListener{
       nifty.fromXml("DisplayImages/HudXML.xml", "HUDScreen", hud);
        
         vp.addProcessor(niftyDisplay);
+       
+        
        }
          }
          else if(name.equals("LeftMouse"))

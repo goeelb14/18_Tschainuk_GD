@@ -19,6 +19,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import fight.NpcStatus;
+import overlay.HudDisplay;
 
 public class NpcCharacterAppState extends AbstractAppState implements PhysicsTickListener
 {
@@ -32,9 +33,11 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Spatial npc;
     private NpcStatus npcStatus;
     
-    public NpcCharacterAppState(BulletAppState bulletAppState)
+    public NpcCharacterAppState(BulletAppState bulletAppState, HudDisplay hud)
     {
         this.bulletAppState = bulletAppState;
+       
+        npcStatus = new NpcStatus(hud);
     }
     
     @Override
@@ -48,7 +51,8 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
         
-        npcStatus = new NpcStatus();
+        
+        
         
         createNpc();
     }
@@ -88,7 +92,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         cont.setEnabled(true);
         npcNode.addControl(cont);
         
-        npcStatus.registerNpc(this);
+       // npcStatus.registerNpc(this);
         
         bulletAppState.getPhysicsSpace().add(npcNode);
         bulletAppState.getPhysicsSpace().add(cont);
@@ -135,10 +139,10 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         int count = npc.getControl(GhostControl.class).getOverlappingCount();
         if(count>2)
         {
-            if(npcStatus.takeDamage(this))
-            {
-                kill();
-            }
+//            if(npcStatus.takeDamage(this))
+//            {
+//                kill();
+//            }
         }
     }
 }

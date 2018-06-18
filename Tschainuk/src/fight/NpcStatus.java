@@ -10,6 +10,7 @@ import character.NpcCharacterAppState;
 import character.StatEnum;
 import java.util.HashMap;
 import java.util.Map;
+import overlay.HudDisplay;
 
 /**
  *
@@ -22,12 +23,16 @@ public class NpcStatus
  
  private Combat combat = new Combat();
  private CharacterGameStats player = new CharacterGameStats(); // dies ist der Spieler
-<<<<<<< HEAD
+
+ public NpcStatus(HudDisplay hud)
+ {
+     
+    player.addObserver(hud);
+ }
  
  
-// NpcStatus status = new NpcStatus();
-=======
->>>>>>> 47e68b18f6b1199614b0e993d8b4e265de079fcc
+
+
  
  public boolean takeDamage(NpcCharacterAppState character)
  {  

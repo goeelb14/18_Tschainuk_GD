@@ -23,3 +23,9 @@ In jeder Stadt gibt es eine Story/Quest (jemand verschwindet oder was auch immer
 
 ## Grafikstil:
 Voxel/Pixel - basiert
+
+##Steuerung
+wasd- Bewegung
+Pfeiltasten - Kamera
+c- Continue wenn Texte erscheinen
+
