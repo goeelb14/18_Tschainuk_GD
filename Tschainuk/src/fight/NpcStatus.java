@@ -22,8 +22,6 @@ public class NpcStatus
  
  private Combat combat = new Combat();
  private CharacterGameStats player = new CharacterGameStats(); // dies ist der Spieler
-
-// NpcStatus status = new NpcStatus();
  
  public boolean takeDamage(NpcCharacterAppState character)
  {  

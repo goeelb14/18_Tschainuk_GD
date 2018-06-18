@@ -6,7 +6,12 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.PhysicsTickListener;
+import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
+import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.bullet.control.GhostControl;
 import com.jme3.input.InputManager;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
@@ -14,7 +19,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-public class NpcCharacterAppState extends AbstractAppState
+public class NpcCharacterAppState extends AbstractAppState implements PhysicsTickListener
 {
     //main application attributes
     private BulletAppState bulletAppState;
@@ -23,6 +28,7 @@ public class NpcCharacterAppState extends AbstractAppState
     private AppStateManager stateManager;
     private InputManager inputManager;
     private Camera flyCam;
+    private Spatial npc;
     
     public NpcCharacterAppState(BulletAppState bulletAppState)
     {
@@ -58,7 +64,7 @@ public class NpcCharacterAppState extends AbstractAppState
     //initializes Npc
     private void createNpc()
     {
-        Spatial npc = assetManager.loadModel("Textures/Hadler.obj");
+        npc = assetManager.loadModel("Textures/Hadler.obj");
         npc.scale(0.15f);
         npc.rotate(0f, FastMath.DEG_TO_RAD * 270, 0);
         
@@ -71,12 +77,18 @@ public class NpcCharacterAppState extends AbstractAppState
         npcControl.setGravity(new Vector3f(0, 1.5f, 0));
         npcNode.addControl(npcControl);
         
+        CollisionShape colShape = new CapsuleCollisionShape(0.825f,2.2f);
+        GhostControl cont = new GhostControl(colShape);
+        cont.addCollideWithGroup(1);
+        cont.setEnabled(true);
+        npcNode.addControl(cont);
+        
         bulletAppState.getPhysicsSpace().add(npcNode);
+        bulletAppState.getPhysicsSpace().add(cont);
         
         rootNode.attachChild(npcNode);
     }
     
-    private Spatial npc;
     private Spatial me;
     private Vector3f lookAtMe;
     private Vector3f followMe;
@@ -102,6 +114,22 @@ public class NpcCharacterAppState extends AbstractAppState
         {
             npc.getControl(BetterCharacterControl.class).setEnabled(false);
             npc.getControl(BetterCharacterControl.class).setEnabled(true);
+        }
+    }
+
+    @Override
+    public void prePhysicsTick(PhysicsSpace space, float tpf) 
+    {
+        int count = npc.getControl(GhostControl.class).getOverlappingCount();
+        System.out.println("Overlapping Count:" + count);
+    }
+
+    @Override
+    public void physicsTick(PhysicsSpace space, float tpf) {
+        int count = npc.getControl(GhostControl.class).getOverlappingCount();
+        if(count>3)
+        {
+            //damage einbauen
         }
     }
 }
