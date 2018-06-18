@@ -33,6 +33,7 @@ public class StartDisplay extends AbstractAppState implements ScreenController {
 
     public StartDisplay(NiftyJmeDisplay niftyDisplay) {
        this.niftyDisplay=niftyDisplay;
+       
     }
     
     

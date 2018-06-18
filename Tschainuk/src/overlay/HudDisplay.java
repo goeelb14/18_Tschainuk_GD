@@ -24,6 +24,7 @@ import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.render.NiftyImage;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import de.lessvoid.nifty.tools.SizeValue;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,7 +33,7 @@ import java.util.Observer;
  *
  * @author Marina
  */
-public class HudDisplay extends AbstractAppState implements ScreenController, Observer {
+public class HudDisplay extends AbstractAppState implements ScreenController {
 
   private Application app;
   private AppStateManager stateManager;
@@ -47,17 +48,19 @@ public class HudDisplay extends AbstractAppState implements ScreenController, Ob
 
     
 
-    public HudDisplay(Node rootNode, AssetManager assetManager) {
+    public HudDisplay(Node rootNode, AssetManager assetManager,NiftyJmeDisplay niftyDisplay) {
        this.rootNode=rootNode;
        this.assetManager=assetManager;
-       
+       this.niftyDisplay=niftyDisplay;
+       this.nifty=niftyDisplay.getNifty();
+       this.screen=nifty.getScreen("HUDScreen");
        
        
     }
   public void bind(Nifty nifty, Screen screen) {
         this.nifty = nifty;
         this.screen = screen;
-       ;
+       
   }
   
   
@@ -85,22 +88,27 @@ public class HudDisplay extends AbstractAppState implements ScreenController, Ob
     this.stateManager = stateManager;
   }    
 
-    @Override
-    public void update(Observable o, Object o1) 
+   
+    public void update(Screen screen, CharacterGameStats cgs) 
     {
+        this.screen=screen;
+        System.out.println("UPDATE HUD");
+       // System.out.println(screen.getScreenId());
         
-       CharacterGameStats cgs= (CharacterGameStats)o;
-       
-        System.out.println(nifty); 
-       Label lblLevel= nifty.getScreen("HUDScreen").findNiftyControl("lblLevel", Label.class);
-        System.out.println(lblLevel);
-       lblLevel.setText("Current Level: " + cgs.getStat(StatEnum.Level));
-       Label lblHP= screen.findNiftyControl("lblHP", Label.class);
-       lblHP.setText("Current HP: " + cgs.getStat(StatEnum.HPNow)+"/"+cgs.getStat(StatEnum.HPMax));
-       Element e= screen.findElementById("lifeBar");
-       int eleWidth=cgs.getBaseStat(StatEnum.HPNow)/cgs.getStat(StatEnum.HPMax)*294;
-       e.setWidth(eleWidth);
+     //  CharacterGameStats cgs= (CharacterGameStats)o;
+       Element lblHP = this.screen.findElementById("lblHP");
+        lblHP.getRenderer(TextRenderer.class).setText("Current HP: "+ cgs.getStat(StatEnum.HPNow)+"/"+cgs.getStat(StatEnum.HPMax));
+        Element lblLevel = this.screen.findElementById("lblLevel");
+        lblLevel.getRenderer(TextRenderer.class).setText("Current Level: "+ cgs.getStat(StatEnum.Level));
+        Element pnlBar= this.screen.findElementById("lifeBar");
+        int hpbar= cgs.getStat(StatEnum.HPNow)/cgs.getStat(StatEnum.HPMax)*400;
+        pnlBar.setConstraintWidth(new SizeValue(hpbar+"px"));
+      //niftyDisplay.getNifty().update();
+        
+     
        
        
     }
+
+   
 }

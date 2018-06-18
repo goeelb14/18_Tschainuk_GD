@@ -10,6 +10,7 @@ import character.NpcCharacterAppState;
 import character.StatEnum;
 import java.util.HashMap;
 import java.util.Map;
+import overlay.GUIListener;
 import overlay.HudDisplay;
 
 /**
@@ -22,12 +23,12 @@ public class NpcStatus
  private Map<NpcCharacterAppState, Enemy> npcMap = new HashMap<>();
  
  private Combat combat = new Combat();
- private CharacterGameStats player = new CharacterGameStats(); // dies ist der Spieler
+ private CharacterGameStats player ;// dies ist der Spieler
 
- public NpcStatus(HudDisplay hud)
+ public NpcStatus(GUIListener guid, CharacterGameStats player)
  {
-     
-    player.addObserver(hud);
+    this.player=player;
+    player.addObserver(guid);
  }
  
  

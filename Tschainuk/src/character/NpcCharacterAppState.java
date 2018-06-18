@@ -19,6 +19,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import fight.NpcStatus;
+import overlay.GUIListener;
 import overlay.HudDisplay;
 
 public class NpcCharacterAppState extends AbstractAppState implements PhysicsTickListener
@@ -33,11 +34,11 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Spatial npc;
     private NpcStatus npcStatus;
     
-    public NpcCharacterAppState(BulletAppState bulletAppState, HudDisplay hud)
+    public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs)
     {
         this.bulletAppState = bulletAppState;
        
-        npcStatus = new NpcStatus(hud);
+        npcStatus = new NpcStatus(guid,cgs);
     }
     
     @Override

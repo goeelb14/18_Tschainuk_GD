@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nifty xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
+    <useControls filename="nifty-default-controls.xml"/>
+    <useStyles filename="nifty-default-styles.xml"/>    
+    <screen id="showStats" controller="overlay.StatsDisplay">
+        <layer childLayout="horizontal" backgroundColor="#000000">
+            <panel width="580" childLayout="center" backgroundColor="#ff007f">
+                <panel backgroundImage="DisplayImages/Ropotta_man.PNG"/>
+            </panel>
+            <panel width="20"></panel>
+            <panel childLayout="vertical" width="*" height="*" >
+                <panel childLayout="horizontal" width="*">
+                    <control name="label" id="HPMax" text="HPMax........."></control>
+                </panel>
+                <panel childLayout="horizontal" width="*">
+                    <control name="label" id="Strength" text="Strength....."></control>
+                </panel>
+                <panel childLayout="horizontal" width="*">
+                    <control name="label" id="Defense" text="Defense....."></control>
+                </panel>
+                <panel childLayout="horizontal" width="*">
+                    <control name="label" id="Luck" text="Luck......."></control>
+                </panel>
+                <panel childLayout="horizontal" width="*">
+                    <control name="label" id="Level" text="Current Level....."></control>
+                </panel>
+                <panel childLayout="horizontal" width="*" >
+                    <control name="label" id="NextLevel" text="Exp until next Level......"></control>
+                </panel>
+                <panel childLayout="horizontal" width="*">
+                    <control name="label" id="RoppTitle" text="The Roppotta Man"></control>
+                </panel>
+                  <panel childLayout="horizontal" width="*">
+                    <control name="label" id="RoppDesc" text="Currently, you do not have a lot of information. Try to find Dr. Chess, the owner of the castle."></control>
+                </panel>
+                <panel backgroundImage="DisplayImages/gun.PNG" height="500">
+                </panel>
+                <panel childLayout="horizontal" width="*" >
+                    <control name="label" id="PressC" text="Press C to continue game"></control>
+                </panel>
+            </panel>
+        </layer>
+    </screen>
+</nifty>
