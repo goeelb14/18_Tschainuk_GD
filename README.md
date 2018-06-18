@@ -27,5 +27,7 @@ Voxel/Pixel - basiert
 ##Steuerung
 wasd- Bewegung
 Pfeiltasten - Kamera
-c- Continue wenn Texte erscheinen
+<C>- Continue wenn Texte erscheinen
+<V>- Zeigt momentane Stats an
+Linke Maustaste - schießen
 
