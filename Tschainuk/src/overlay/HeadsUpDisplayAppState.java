@@ -41,7 +41,8 @@ public class HeadsUpDisplayAppState extends AbstractAppState
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
         
-        setCrosshair();
+        //Dies bietet die Möglichkeit, ein Fadenkreuz zu verwenden
+        //setCrosshair();
     }
     
     //sets crosshair at center of Screen

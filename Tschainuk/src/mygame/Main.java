@@ -92,6 +92,10 @@ public class Main extends SimpleApplication
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
         GunActionAppState gaas = new GunActionAppState(bulletAppState);
         
+        //Hinzufügen der PhysicsTickListener
+        this.bulletAppState.getPhysicsSpace().addTickListener(gaas);
+        this.bulletAppState.getPhysicsSpace().addTickListener(ncas);
+        
         stateManager.attach(pcas);
         stateManager.attach(mas);
         stateManager.attach(hudas);

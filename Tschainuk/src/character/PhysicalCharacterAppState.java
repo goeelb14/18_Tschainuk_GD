@@ -98,6 +98,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         rootNode.attachChild(playerNode);
     }
     
+    //Methode um Sichtfeld einzuschränken, geht momentan nicht
     private void setMaxFirstPersonCamMovableAngle()
     {
         if(flyCam.getUp().z < -0.75f)

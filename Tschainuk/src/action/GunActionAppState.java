@@ -12,12 +12,15 @@ import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.collision.CollisionResult;
+import com.jme3.collision.CollisionResults;
 import com.jme3.input.InputManager;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
@@ -39,7 +42,8 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     
     private List<Geometry> geoms = new LinkedList<>();
     private Vector3f flugbahn;
-    
+        private Vector3f charLocation;
+
     public GunActionAppState(BulletAppState bulletAppState)
     {
         this.bulletAppState = bulletAppState;
@@ -76,7 +80,10 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         
         geom.setLocalTranslation(rootNode.getChild("MainCharacter").getWorldTranslation());
         
-        RigidBodyControl cont = new RigidBodyControl(2f);
+        BoxCollisionShape colShape = new BoxCollisionShape(new Vector3f(0.1f, 0.1f, 0.1f));
+        RigidBodyControl cont = new RigidBodyControl(colShape,0.05f);
+        cont.setGravity(new Vector3f(0, 0.5f, 0));
+        cont.setKinematic(true);
         geom.addControl(cont);
         
         bulletAppState.getPhysicsSpace().add(cont);
@@ -87,7 +94,11 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     @Override
     public void update(float tpf)
     {
-        
+        flugbahn = rootNode.getChild("MainCharacter").getControl(BetterCharacterControl.class).getViewDirection();
+        for(int i=0;i<geoms.size();i++)
+        {
+            geoms.get(i).setLocalTranslation(geoms.get(i).getLocalTranslation().add(flugbahn.normalizeLocal()));
+        }
     }
     
     private void setUpMouseButton()
@@ -98,36 +109,18 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     
     @Override
     public void onAction(String name, boolean isPressed, float tpf)
-    {
-        flugbahn = rootNode.getChild("MainCharacter").getControl(BetterCharacterControl.class).getViewDirection();
-        
-        if(geoms.size() < 20)
-            geoms.add(createGeometry());
-        else
-        {
-            geoms.remove(0);
-            geoms.add(createGeometry());
-        }
-        
-        System.out.println("Flugbahn: " + flugbahn);
+    {        
+        geoms.add(createGeometry());        
     }
 
     @Override
     public void prePhysicsTick(PhysicsSpace space, float tpf)
     {
-        if(geoms.isEmpty() == false)
-        {
-            for (Geometry geom : geoms)
-            {
-                geom.getControl(RigidBodyControl.class).setLinearVelocity(new Vector3f(0, 0, 0));
-                geom.getControl(RigidBodyControl.class).applyImpulse(flugbahn, Vector3f.ZERO);
-            }
-        }
+      
     }
 
     @Override
     public void physicsTick(PhysicsSpace space, float tpf)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
