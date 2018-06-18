@@ -30,7 +30,7 @@ public class NpcStatus
     
     if(npcMap.get(character).getStat(StatEnum.HPNow)<= 0)
     {
-        character.kill();
+        return true;
     }
     
      return false;
@@ -38,8 +38,11 @@ public class NpcStatus
  
  public void registerNpc(NpcCharacterAppState appState)
  {
+  if(!npcMap.containsKey(appState)) 
+  { 
   Enemy e = new Enemy(EnemyEnum.HADLER); //vorläufig existiert nur Hadler als Gegner
   npcMap.put(appState, e);
+  }
  }
  
  

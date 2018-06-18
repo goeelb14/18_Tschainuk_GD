@@ -18,6 +18,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import fight.NpcStatus;
 
 public class NpcCharacterAppState extends AbstractAppState implements PhysicsTickListener
 {
@@ -29,6 +30,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private InputManager inputManager;
     private Camera flyCam;
     private Spatial npc;
+    private NpcStatus npcStatus;
     
     public NpcCharacterAppState(BulletAppState bulletAppState)
     {
@@ -46,10 +48,13 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
         
+        npcStatus = new NpcStatus();
+        
         createNpc();
     }
     
-    public void kill()
+    //"Tötet" den Npc
+    private void kill()
     {
         npc.rotate(FastMath.DEG_TO_RAD * 90, 0 , 0);
         npc.getControl(BetterCharacterControl.class).setEnabled(false);
@@ -82,6 +87,8 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         cont.addCollideWithGroup(1);
         cont.setEnabled(true);
         npcNode.addControl(cont);
+        
+        npcStatus.registerNpc(this);
         
         bulletAppState.getPhysicsSpace().add(npcNode);
         bulletAppState.getPhysicsSpace().add(cont);
@@ -120,16 +127,18 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     @Override
     public void prePhysicsTick(PhysicsSpace space, float tpf) 
     {
-        int count = npc.getControl(GhostControl.class).getOverlappingCount();
-        System.out.println("Overlapping Count:" + count);
+
     }
 
     @Override
     public void physicsTick(PhysicsSpace space, float tpf) {
         int count = npc.getControl(GhostControl.class).getOverlappingCount();
-        if(count>3)
+        if(count>2)
         {
-            //damage einbauen
+            if(npcStatus.takeDamage(this))
+            {
+                kill();
+            }
         }
     }
 }

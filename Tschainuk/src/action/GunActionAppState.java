@@ -80,7 +80,10 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         
         geom.setLocalTranslation(rootNode.getChild("MainCharacter").getWorldTranslation());
         
-        RigidBodyControl cont = new RigidBodyControl(2f);
+        BoxCollisionShape colShape = new BoxCollisionShape(new Vector3f(0.1f, 0.1f, 0.1f));
+        RigidBodyControl cont = new RigidBodyControl(colShape,0.05f);
+        cont.setGravity(new Vector3f(0, 0.5f, 0));
+        cont.setKinematic(true);
         geom.addControl(cont);
         
         bulletAppState.getPhysicsSpace().add(cont);
@@ -91,7 +94,11 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     @Override
     public void update(float tpf)
     {
-        
+        flugbahn = rootNode.getChild("MainCharacter").getControl(BetterCharacterControl.class).getViewDirection();
+        for(int i=0;i<geoms.size();i++)
+        {
+            geoms.get(i).setLocalTranslation(geoms.get(i).getLocalTranslation().add(flugbahn.normalizeLocal()));
+        }
     }
     
     private void setUpMouseButton()
@@ -109,13 +116,7 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     @Override
     public void prePhysicsTick(PhysicsSpace space, float tpf)
     {
-       for(int i=0;i<geoms.size();i++)
-       {
-           flugbahn = rootNode.getChild("MainCharacter").getControl(BetterCharacterControl.class).getViewDirection();
-           charLocation = rootNode.getChild("MainCharacter").getLocalTranslation();
-           //flugbahn implementieren
-       }
-       geoms.clear();
+      
     }
 
     @Override
