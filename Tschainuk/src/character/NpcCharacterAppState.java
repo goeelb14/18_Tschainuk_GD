@@ -43,6 +43,12 @@ public class NpcCharacterAppState extends AbstractAppState
         createNpc();
     }
     
+    public void kill()
+    {
+        npc.rotate(FastMath.DEG_TO_RAD * 90, 0 , 0);
+        npc.getControl(BetterCharacterControl.class).setEnabled(false);
+    }
+    
     @Override
     public void update(float tpf)
     {

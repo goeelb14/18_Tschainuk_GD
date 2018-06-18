@@ -6,18 +6,28 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.collision.CollisionResults;
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.PhysicsTickListener;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
+import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.InputManager;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.MouseButtonTrigger;
-import com.jme3.math.Ray;
-import com.jme3.math.Vector2f;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Box;
+import java.util.LinkedList;
+import java.util.List;
+import fight.NpcStatus;
 
-public class GunActionAppState extends AbstractAppState implements ActionListener
+public class GunActionAppState extends AbstractAppState implements ActionListener, PhysicsTickListener
 {
     //MainApplication Attributes
     private Node rootNode;
@@ -25,6 +35,17 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     private AppStateManager stateManager;
     private InputManager inputManager;
     private Camera cam;
+    private BulletAppState bulletAppState;
+    
+    private List<Geometry> geoms = new LinkedList<>();
+    private Vector3f flugbahn;
+    
+    public GunActionAppState(BulletAppState bulletAppState)
+    {
+        this.bulletAppState = bulletAppState;
+    }
+    
+    private NpcStatus npcStatus;
     
     @Override
     public void initialize(AppStateManager stateManager, Application app)
@@ -36,8 +57,31 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
+                        
+        npcStatus = new NpcStatus();
         
         setUpMouseButton();
+    }
+    
+    private Geometry createGeometry()
+    {
+        Box b = new Box(0.1f, 0.1f, 0.1f);
+        Geometry geom = new Geometry("Bullet", b);
+        
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Black);
+        geom.setMaterial(mat);
+        
+        rootNode.attachChild(geom);
+        
+        geom.setLocalTranslation(rootNode.getChild("MainCharacter").getWorldTranslation());
+        
+        RigidBodyControl cont = new RigidBodyControl(2f);
+        geom.addControl(cont);
+        
+        bulletAppState.getPhysicsSpace().add(cont);
+ 
+        return geom;
     }
     
     @Override
@@ -55,22 +99,35 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     @Override
     public void onAction(String name, boolean isPressed, float tpf)
     {
-        Vector2f v2f = inputManager.getCursorPosition();
-        Vector3f v3f = cam.getWorldCoordinates(v2f, 0.0f);
-        Vector3f dir = cam.getWorldCoordinates(v2f, 1.0f).subtractLocal(v3f);
-            
-        Ray ray = new Ray(v3f, dir);
-            
-        CollisionResults cr = new CollisionResults();
-        rootNode.collideWith(ray, cr);
-            
-        for(int i = 0; i < cr.size(); i++)
+        flugbahn = rootNode.getChild("MainCharacter").getControl(BetterCharacterControl.class).getViewDirection();
+        
+        if(geoms.size() < 20)
+            geoms.add(createGeometry());
+        else
         {
-            float dist = cr.getCollision(i).getDistance();
-            Vector3f cp = cr.getCollision(i).getContactPoint();
-            String target = cr.getCollision(i).getGeometry().getName();
-                
-            System.out.println("Selection:" + i + ", Target: " + target + ", Contact Point: " + cp + ", Distance: " + dist);
+            geoms.remove(0);
+            geoms.add(createGeometry());
         }
+        
+        System.out.println("Flugbahn: " + flugbahn);
+    }
+
+    @Override
+    public void prePhysicsTick(PhysicsSpace space, float tpf)
+    {
+        if(geoms.isEmpty() == false)
+        {
+            for (Geometry geom : geoms)
+            {
+                geom.getControl(RigidBodyControl.class).setLinearVelocity(new Vector3f(0, 0, 0));
+                geom.getControl(RigidBodyControl.class).applyImpulse(flugbahn, Vector3f.ZERO);
+            }
+        }
+    }
+
+    @Override
+    public void physicsTick(PhysicsSpace space, float tpf)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -16,10 +16,14 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
+<<<<<<< HEAD
 import overlay.GUIListener;
 //import overlay.HudDisplay;
 import overlay.HudDisplay;
 import overlay.StartDisplay;
+=======
+import overlay.HudDisplay;
+>>>>>>> bd423014027cdb83daeb37cf4868ab01e7b26423
 
 public class Main extends SimpleApplication
 {
@@ -89,7 +93,7 @@ public class Main extends SimpleApplication
         MapAppState mas = new MapAppState(bulletAppState);
         NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState);
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
-        GunActionAppState gaas = new GunActionAppState();
+        GunActionAppState gaas = new GunActionAppState(bulletAppState);
         
         stateManager.attach(pcas);
         stateManager.attach(mas);
