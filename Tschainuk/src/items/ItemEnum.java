@@ -13,7 +13,21 @@ import fight.SkillModifier;
  * @author Marina
  */
 public enum ItemEnum {
-   // HEALING_HERB("Healing Herb", new SkillModifier(StatEnum.HPNow,30,true));
+   HEALING_HERB("Healing Herb", new SkillModifier("Healing Herb,",30,true,StatEnum.HPNow));
     private String name;
+    SkillModifier mod;
+    ItemEnum(String name, SkillModifier mod)
+    {
+       this.name=name;
+       this.mod=mod;
+    }
+    public String getName()
+    {
+        return name;
+    }
+    public SkillModifier getMod()
+    {
+        return mod;
+    }
     
 }

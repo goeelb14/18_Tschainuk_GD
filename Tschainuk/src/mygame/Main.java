@@ -9,9 +9,17 @@ import map.MapAppState;
 import overlay.HeadsUpDisplayAppState;
 import character.NpcCharacterAppState;
 import character.PhysicalCharacterAppState;
+import com.jme3.audio.AudioNode;
+import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
-import display.HudDisplay;
+import overlay.GUIListener;
+//import overlay.HudDisplay;
+import overlay.HudDisplay;
+import overlay.StartDisplay;
 
 public class Main extends SimpleApplication
 {
@@ -21,27 +29,57 @@ public class Main extends SimpleApplication
     {
         Main app = new Main();
         app.start();
+        
     }
 
     @Override
     public void simpleInitApp()
     {
+        
         attachBulletAppState();
         addAppStates();
         
         viewPort.setBackgroundColor(ColorRGBA.White);
         flyCam.setMoveSpeed(50);
+        niftyInit();
+        
+        
     }
-    HudDisplay di;
+    StartDisplay di;
+    GUIListener guiL;
+    AudioNode aud;
+   HudDisplay hud;
     public void niftyInit()
     {
+       hud=new HudDisplay(this.rootNode,assetManager);
+        aud= new AudioNode(assetManager,"music/SteamTrack.wav");
+        aud.setPositional(false);
+        rootNode.attachChild(aud);
         NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, guiViewPort);
-         di= new HudDisplay();
-        Nifty nifty = niftyDisplay.getNifty();
 
-        guiViewPort.addProcessor(niftyDisplay);
+        di= new StartDisplay(niftyDisplay);
+        aud.setLooping(true);
+        aud.play();
+         guiL= new GUIListener(guiViewPort,niftyDisplay,hud);
+         
+         
+        inputManager.addMapping("CPressed", new KeyTrigger(KeyInput.KEY_C));
+        inputManager.addListener(guiL, "CPressed");
+        inputManager.addMapping("LeftMouse", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         
-       nifty.fromXml("HUDXML.xml", "start", di);
+        inputManager.addListener(guiL, "LeftMouse");
+        setDisplayStatView(false); setDisplayFps(false);
+                 
+        Nifty nifty = niftyDisplay.getNifty();
+        nifty.fromXml("DisplayImages/HudXML.xml", "start", di);
+       
+        guiViewPort.addProcessor(niftyDisplay);
+       
+       
+       
+       
+       
+       
         
     }
     

@@ -76,7 +76,7 @@ public class Combat
         }
        
     }
-    public Item[] ItemsDropped(Enemy enemy)
+    public Item[] itemsDropped(Enemy enemy)
     {
         return null;
     }

@@ -233,5 +233,6 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         inputManager.addListener(this, "CharUp");
         inputManager.addListener(this, "CharDown");
         inputManager.addListener(this, "CharLeftShift");
+         
     }
 }
