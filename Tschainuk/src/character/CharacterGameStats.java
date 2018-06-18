@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author Marina
  */
-public class CharacterGameStats {
+public class CharacterGameStats extends Observable{
     
     Map<StatEnum, Integer> baseStats;
     Map<StatEnum, Integer> totalStats;
@@ -77,6 +79,7 @@ public class CharacterGameStats {
        
         
         updateStats();
+        this.notifyAll();
     }
     public void updateStats()
     {
@@ -92,6 +95,7 @@ public class CharacterGameStats {
         {
             totalStats.put(StatEnum.HPNow,totalStats.get(StatEnum.HPMax));
         }
+        this.notifyAll();
     }
    public void applyMod(SkillModifier mod)
    {
@@ -107,6 +111,7 @@ public class CharacterGameStats {
        {
             totalStats.put(mod.getAffectedStat(), 3);
        }
+       this.notifyAll();
    }
     public void addModifier(SkillModifier mod)
     {
@@ -133,6 +138,8 @@ public class CharacterGameStats {
         totalStats= new HashMap<>(baseStats);
         exp=0;
         modif= new ArrayList<>();
+       
+        
         
         
     }
@@ -156,5 +163,12 @@ public class CharacterGameStats {
              totalStats.put(StatEnum.HPNow, currentHP-damage);
          }
       }
+     
+   public void addObserver(Observer o)
+   {
+       this.addObserver(o);
+       this.notifyAll();
+       
+   }
     
 }

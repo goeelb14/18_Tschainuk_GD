@@ -2,28 +2,39 @@
 <nifty xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
     <useControls filename="nifty-default-controls.xml"/>
     <useStyles filename="nifty-default-styles.xml"/>
-    <screen id="HUDScreen" controller="jme3test.TestLoadingScreen">
-        <layer id="foreground"  childLayout="bottom" backgroundImage="DisplayImages/HudNeu.png">
-           <panel height="*" width="*" childLayout="bottom"> 
-           <control name="button" id="labelHP" text="Remaining Life" childLayout="center" ></control>
-           </panel>
-                      
-                      
-                       
-         
-           
-        </layer>
-    </screen>
+    
     <screen id="start" controller="jme3test.TestLoadingScreen">
-        <layer id="GLayer1" childLayout="center">
-            <panel id="GPanel3" backgroundImage="DisplayImages/TschainukStartScreen.jpg" width="*" valign="bottom" height="*"/>
+        <layer  childLayout="center">
+            <panel  backgroundImage="DisplayImages/TschainukStartScreen.jpg" width="*" valign="bottom" height="*"/>
         </layer>
     </screen>
     <screen id="story" controller="jme3test.TestLoadingScreen">
-        <layer id="GLayer2" childLayout="center">
-            <panel id="GPanel4" backgroundImage="DisplayImages/TschainukStory.png" width="*" valign="bottom" height="*">
+        <layer  childLayout="center">
+            <panel backgroundImage="DisplayImages/TschainukStory.png" width="*" valign="bottom" height="*">
                 
             </panel>
         </layer>
+    </screen>
+    <screen id="HUDScreen">
+        <layer backgroundImage="DisplayImages/HudNeu.png"  childLayout="vertical">
+            <panel height="880" width="100%" ></panel>
+            <panel childLayout="horizontal" >
+                <panel width="450" height="*"></panel> 
+                <panel  height="*" childLayout="vertical" >
+                 <panel childLayout="horizontal">   
+                     <control id= "lblLevel" name="label" text="Current Level: 1" textHAlign="left"<!-- font="Interface/Fonts/BitmapFont1.fnt"-->></control>
+                 </panel>
+                 <panel childLayout="horizontal">
+                     <control id="lblHP" name="label" text="Current HP: "></control>
+                 </panel>
+                     
+                     
+                </panel>
+               
+            </panel>
+            
+        </layer>
+       
+        
     </screen>
 </nifty>

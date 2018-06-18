@@ -5,6 +5,8 @@
  */
 package overlay;
 
+import character.CharacterGameStats;
+import character.StatEnum;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
@@ -13,24 +15,27 @@ import com.jme3.audio.AudioNode;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Node;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.NiftyControl;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.render.NiftyImage;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
  *
  * @author Marina
  */
-public class HudDisplay extends AbstractAppState implements ScreenController {
+public class HudDisplay extends AbstractAppState implements ScreenController, Observer {
 
   private Application app;
   private AppStateManager stateManager;
   private Nifty nifty;
   private Screen screen;
   
-  private Element progressBarElement;
   private Node rootNode;
   private NiftyJmeDisplay niftyDisplay;
   private AssetManager assetManager;
@@ -75,4 +80,14 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
     this.app = app;
     this.stateManager = stateManager;
   }    
+
+    @Override
+    public void update(Observable o, Object o1) 
+    {
+       CharacterGameStats cgs= (CharacterGameStats)o;
+       screen.findElementById("lblLevel").getRenderer(TextRenderer.class).setText("Current Level: "+cgs.getBaseStat(StatEnum.Level));
+       String hptext = "Current HP: "+cgs.getBaseStat(StatEnum.HPNow)+"/" + cgs.getBaseStat(StatEnum.HPMax);
+        screen.findElementById("lblLevel").getRenderer(TextRenderer.class).setText(hptext);
+       
+    }
 }
