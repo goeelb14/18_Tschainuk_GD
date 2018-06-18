@@ -12,6 +12,7 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.audio.AudioNode;
+import com.jme3.input.controls.ActionListener;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.Control;
@@ -20,6 +21,7 @@ import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.NiftyControl;
 import de.lessvoid.nifty.controls.label.LabelControl;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.ImageRenderer;
 import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.render.NiftyImage;
 import de.lessvoid.nifty.screen.Screen;
@@ -27,6 +29,11 @@ import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.SizeValue;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -70,7 +77,8 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
 
     public void onEndScreen() {
   }
-    public void gunShot()
+    
+    public void gunShot() 
     {
         
         AudioNode audio_gun = new AudioNode(assetManager, "music/gunshot.wav");
@@ -79,9 +87,30 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
         audio_gun.setVolume(2);
         rootNode.attachChild(audio_gun);
         audio_gun.play();
-
-    
+        Element layer = this.screen.findElementById("layerHUD");
+        layer.getRenderer(ImageRenderer.class).setImage(nifty.createImage(this.screen, "DisplayImages/HudShoot.png", false));
+        Timer t = new Timer();
+        t.schedule(new TT(layer,this.screen), 300);
+        
+            
+      
     }
+    class TT extends TimerTask
+    {
+        private Element layer;
+        private Screen screen;
+        public TT(Element layer,Screen screen)
+        {
+            this.layer=layer;
+            this.screen=screen;
+        }
+        @Override
+        public void run() {
+           layer.getRenderer(ImageRenderer.class).setImage(nifty.createImage(this.screen, "DisplayImages/HudNeu.png", false)); 
+        }
+        
+    }
+   
   @Override
   public void initialize(AppStateManager stateManager, Application app) {
     this.app = app;
@@ -101,7 +130,7 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
         Element lblLevel = this.screen.findElementById("lblLevel");
         lblLevel.getRenderer(TextRenderer.class).setText("Current Level: "+ cgs.getStat(StatEnum.Level));
         Element pnlBar= this.screen.findElementById("lifeBar");
-        int hpbar= cgs.getStat(StatEnum.HPNow)/cgs.getStat(StatEnum.HPMax)*400;
+        int hpbar= cgs.getStat(StatEnum.HPNow)/cgs.getStat(StatEnum.HPMax)*294;
         pnlBar.setConstraintWidth(new SizeValue(hpbar+"px"));
       //niftyDisplay.getNifty().update();
         
