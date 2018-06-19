@@ -40,10 +40,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Vector3f startingPos;
     private String npcName;
     private boolean madeSounds;
-<<<<<<< HEAD
- 
-=======
->>>>>>> 47b797fd63e37e6eba840c8d1815e559b1578bd7
+
     private boolean npcDead = false;
 
     public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs, Node rootNode,AssetManager assetManager, NpcStatus npcStatus, Vector3f startingPos, String npcName)

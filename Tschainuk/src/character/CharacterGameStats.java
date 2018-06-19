@@ -21,7 +21,6 @@ import java.util.Observer;
  */
 public class CharacterGameStats extends Observable{
     
-<<<<<<< HEAD
     private Map<StatEnum, Integer> baseStats;
     private Map<StatEnum, Integer> totalStats;
     private List<SkillModifier> modif;
@@ -30,13 +29,7 @@ public class CharacterGameStats extends Observable{
     
     
     private long exp;
-=======
-    Map<StatEnum, Integer> baseStats;
-    Map<StatEnum, Integer> totalStats;
-    List<SkillModifier> modif;
->>>>>>> 47b797fd63e37e6eba840c8d1815e559b1578bd7
-     
-    private long exp;
+
       
     public long WhenNextLevel()
     {
@@ -158,7 +151,7 @@ public class CharacterGameStats extends Observable{
         baseStats.put(StatEnum.Luck, 20);
         totalStats= new HashMap<>(baseStats);
         exp=0;
-<<<<<<< HEAD
+
         modif= new ArrayList();
         myItems= new ArrayList<>();
         Item i = new Item(ItemEnum.HEALING_HERB);
@@ -172,11 +165,9 @@ public class CharacterGameStats extends Observable{
     {
         return myItems.toArray();
     }
-=======
-        modif= new ArrayList<>(); 
-    }
-    
->>>>>>> 47b797fd63e37e6eba840c8d1815e559b1578bd7
+
+      
+
     public int getStat(StatEnum stat)
     {
         return totalStats.get(stat);
@@ -207,7 +198,7 @@ public class CharacterGameStats extends Observable{
       
        super.addObserver(o);
        setChanged();
-<<<<<<< HEAD
+
        notifyObservers();
        
        
@@ -233,12 +224,17 @@ public class CharacterGameStats extends Observable{
         }
         setChanged();
         notifyObservers();
-        myItems.remove(itemIndex);
+        i.setAmount(i.getAmount()-1);
+        if(i.getAmount()==0)
+        {
+           myItems.remove(itemIndex); 
+        }
+        
     }
   
     
-=======
-       notifyObservers();       
-   }    
->>>>>>> 47b797fd63e37e6eba840c8d1815e559b1578bd7
+
+              
+       
+
 }
