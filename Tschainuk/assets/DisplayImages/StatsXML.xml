@@ -10,33 +10,37 @@
             <panel width="20"></panel>
             <panel childLayout="vertical" width="*" height="*" >
                 <panel childLayout="horizontal" width="*">
-                    <control name="label" id="HPMax" text="HPMax........."></control>
+                    <control name="label" id="HPMax" text="HPMax........." font="Interface/Fonts/CopperplateGothicBold.fnt"></control>
                 </panel>
                 <panel childLayout="horizontal" width="*">
-                    <control name="label" id="Strength" text="Strength....."></control>
+                    <control name="label" id="Strength" text="Strength....." font="Interface/Fonts/CopperplateGothicBold.fnt"></control>
                 </panel>
                 <panel childLayout="horizontal" width="*">
-                    <control name="label" id="Defense" text="Defense....."></control>
+                    <control name="label" id="Defense" text="Defense....." font="Interface/Fonts/CopperplateGothicBold.fnt"></control>
                 </panel>
                 <panel childLayout="horizontal" width="*">
-                    <control name="label" id="Luck" text="Luck......."></control>
+                    <control name="label" id="Luck" text="Luck......." font="Interface/Fonts/CopperplateGothicBold.fnt"></control>
                 </panel>
                 <panel childLayout="horizontal" width="*">
-                    <control name="label" id="Level" text="Current Level....."></control>
+                    <control name="label" id="Level" text="Current Level....." font="Interface/Fonts/CopperplateGothicBold.fnt"></control>
                 </panel>
                 <panel childLayout="horizontal" width="*" >
-                    <control name="label" id="NextLevel" text="Exp until next Level......"></control>
+                    <control name="label" id="NextLevel" text="Exp until next Level......" font="Interface/Fonts/CopperplateGothicBold.fnt"></control>
                 </panel>
                 <panel childLayout="horizontal" width="*">
-                    <control name="label" id="RoppTitle" text="The Roppotta Man"></control>
+                    <control name="label" id="RoppTitle" text="Help:" font="Interface/Fonts/CopperplateGothicBold.fnt"></control>
                 </panel>
                   <panel childLayout="horizontal" width="*">
-                    <control name="label" id="RoppDesc" text="Currently, you do not have a lot of information. Try to find Dr. Chess, the owner of the castle."></control>
+                    <control name="label" id="RoppDesc" font="Interface/Fonts/CopperplateGothicBold.fnt" text="Currently, you do not have a lot of information. Try to find Dr. Chess, the owner of the castle."></control>
                 </panel>
                 <panel backgroundImage="DisplayImages/gun.PNG" height="500">
                 </panel>
                 <panel childLayout="horizontal" width="*" >
+                    <panel width="85%"></panel>
+                    <panel childLayout="vertical">
+                     <panel height="90%"></panel>   
                     <control name="label" id="PressC" text="Press C to continue game"></control>
+                    </panel>
                 </panel>
             </panel>
         </layer>

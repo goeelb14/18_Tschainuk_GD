@@ -31,10 +31,11 @@ public class GUIListener implements ActionListener,Observer{
    private StartDisplay di;
     private HudDisplay hud;
     boolean end;
-   AudioNode aud;
-   Node rootNode;
-   AssetManager assetManager;
-   CharacterGameStats cgs;
+  private AudioNode aud;
+   private Node rootNode;
+   private AssetManager assetManager;
+   private CharacterGameStats cgs;
+   private boolean bagOn;
  
    
 
@@ -49,6 +50,7 @@ public class GUIListener implements ActionListener,Observer{
       this.rootNode=rootNode;
       this.assetManager=assetManager;
       this.cgs=cgs;
+       bagOn=false;
         
     }
     
@@ -70,6 +72,7 @@ public class GUIListener implements ActionListener,Observer{
        
         vp.addProcessor(niftyDisplay);
         counter++;
+        bagOn=false;
        }
        
        else
@@ -82,7 +85,7 @@ public class GUIListener implements ActionListener,Observer{
      hud.update(nifty.getScreen("HUDScreen"), cgs);
        
         vp.addProcessor(niftyDisplay);
-       
+       bagOn=false;
         
        }
          }
@@ -97,6 +100,7 @@ public class GUIListener implements ActionListener,Observer{
          }
          else if (name.equals("BPressed")&&!end)
           {
+              bagOn=true;
                vp.removeProcessor(niftyDisplay);
              Nifty nifty = niftyDisplay.getNifty();
              
@@ -107,7 +111,7 @@ public class GUIListener implements ActionListener,Observer{
                 hud.displayItems(cgs.getCurrentItems(),niftyDisplay.getNifty().getScreen("backpack"));
                 vp.addProcessor(niftyDisplay);
             }
-         else if(name.equals("UPressed")&&!end)
+         else if(name.equals("UPressed")&&!end&&bagOn)
          {
              int index=hud.getItemIndex();
              if(cgs.getCurrentItems().length>0&&index<cgs.getCurrentItems().length)
@@ -173,6 +177,7 @@ public class GUIListener implements ActionListener,Observer{
       hud.update(niftyDisplay.getNifty().getScreen("HUDScreen"),cgs);
        
         vp.addProcessor(niftyDisplay);
+        bagOn=false;
         
        }
     }

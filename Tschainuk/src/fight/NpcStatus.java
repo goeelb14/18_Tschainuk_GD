@@ -68,16 +68,8 @@ private Node rootNode;
     if(npcMap.get(character).getStat(StatEnum.HPNow)<= 0)
     {
         player.NextLevelReached(npcMap.get(character).getExpWorth());
-       
-//          AudioNode death= new AudioNode(assetManager,"music/DeadHadler.wav");
-//             death.setPositional(false);
-//             death.setLooping(false);
-//             rootNode.attachChild(death);     
-//             
-//             death.play(); 
-//             rootNode.detachChild(death);
-//            
-//             System.out.println("AudioNode worked");
+        System.out.println("LevelUpdate");
+
         return true;        
     }   
      return false;

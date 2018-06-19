@@ -15,7 +15,7 @@ import fight.SkillModifier;
 public enum ItemEnum {
    HEALING_HERB("Healing Herb", new SkillModifier("Healing Herb,",30,true,StatEnum.HPNow),"ItemSprites/healingherb.png");
     private String name;
-    SkillModifier mod;
+    private SkillModifier mod;
     private String imagePath;
     ItemEnum(String name, SkillModifier mod, String imagePath)
     {

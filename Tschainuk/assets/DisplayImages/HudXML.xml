@@ -22,12 +22,15 @@
                 <panel width="450" height="*"></panel> 
                 <panel  height="*" childLayout="vertical" >
                     <panel childLayout="horizontal">   
-                        <control id= "lblLevel" name="label"  text="Current Level: 1"></control>
+                        <control id= "lblLevel" name="label"  text="Current Level: 1." font="Interface/Fonts/Jokerman.fnt"></control>
+                        
                     </panel>
+                    <panel height="10"></panel>
                     <panel childLayout="horizontal">
-                        <control id="lblHP" name="label" text="Current HP:............ "></control>
+                        <control id="lblHP" name="label" text="Current HP:............ " font="Interface/Fonts/Jokerman.fnt"></control>
                      
                     </panel>
+                    <panel height="10"></panel>
                     <panel childLayout="center" backgroundColor="#000000" height="30" width="300">
                         <panel childLayout="horizontal" height="24" width="294">
                             <panel id="lifeBar" height="*" width="*"   backgroundColor="#1cae1c"/>
@@ -51,7 +54,7 @@
         <layer backgroundColor="#bb7342" childLayout="horizontal" >
            <panel childLayout="vertical">
              <image  filename="DisplayImages/backpack.png" height="385" width="385"></image>
-             <control id="empty" text="Your bag is currently empty" name="label"></control>
+             <control id="empty" text="Your bag is currently empty" name="label" font="Interface/Fonts/GoudyStout.fnt" visible="false"></control>
            </panel>
             <panel inset="10px" backgroundColor="#6E4C35" childLayout="vertical" id="layerOuter">
             <image id="item1" filename="DisplayImages/backpack.png" height="100" width="100"></image>
