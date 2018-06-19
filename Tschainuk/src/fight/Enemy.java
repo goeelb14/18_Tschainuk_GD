@@ -16,13 +16,8 @@ import java.util.Map;
  */
 public class Enemy 
 {
-<<<<<<< HEAD
      private Map<StatEnum, Integer> stats;
      private  EnemyEnum type;
-=======
-     Map<StatEnum, Integer> stats;
-     private EnemyEnum type;
->>>>>>> 2b4fdecdf8126c6300e963c4a45ce5b87c022239
      private int expWorth;
      public Enemy(EnemyEnum type)
      {

@@ -34,6 +34,7 @@ public class NpcStatus
  public boolean playerDamage(NpcCharacterAppState npc)
  {
      int playerDamage = combat.calcDamage(player, npcMap.get(npc), false);
+     System.out.println("Damage:" + playerDamage);
      player.takeDamage(playerDamage);
      if(player.getStat(StatEnum.HPNow)<=0)
      {
