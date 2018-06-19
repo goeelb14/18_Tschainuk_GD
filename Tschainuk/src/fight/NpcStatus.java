@@ -31,7 +31,12 @@ public class NpcStatus
     player.addObserver(guid);
  }
  
- 
+ public boolean playerDamage(NpcCharacterAppState npc)
+ {
+     int playerDamage = combat.calcDamage(player, npcMap.get(npc), false);
+     System.out.println("Damage:" + playerDamage);
+     return true;
+ }
 
 
  
@@ -52,8 +57,8 @@ public class NpcStatus
  {
   if(!npcMap.containsKey(appState)) 
   { 
-  Enemy e = new Enemy(EnemyEnum.HADLER); //vorläufig existiert nur Hadler als Gegner
-  npcMap.put(appState, e);
+        Enemy e = new Enemy(EnemyEnum.HADLER); //vorläufig existiert nur Hadler als Gegner
+        npcMap.put(appState, e);
   }
  }
  

@@ -28,7 +28,11 @@ public enum EnemyEnum
         stats.put(StatEnum.Defense,defense);
         stats.put(StatEnum.Strength,strength);
         stats.put(StatEnum.Luck,luck);
+<<<<<<< HEAD
+        stats.put(StatEnum.Level, level);
+=======
         stats.put(StatEnum.Level,level);
+>>>>>>> 2b4fdecdf8126c6300e963c4a45ce5b87c022239
     }
     public int getStat(StatEnum stat)
     {

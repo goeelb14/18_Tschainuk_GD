@@ -93,7 +93,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         cont.setEnabled(true);
         npcNode.addControl(cont);
         
-       // npcStatus.registerNpc(this);
+        //npcStatus.registerNpc((NpcCharacterAppState)this);
         
         bulletAppState.getPhysicsSpace().add(npcNode);
         bulletAppState.getPhysicsSpace().add(cont);
@@ -122,10 +122,9 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         
         npc.getControl(BetterCharacterControl.class).setEnabled(true);
         
-        if(dist < 5f)
+        if(dist < 3f)
         {
-            npc.getControl(BetterCharacterControl.class).setEnabled(false);
-            npc.getControl(BetterCharacterControl.class).setEnabled(true);
+            npcStatus.playerDamage((NpcCharacterAppState)this);
         }
     }
 
@@ -139,7 +138,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     public void physicsTick(PhysicsSpace space, float tpf) {
         int count = npc.getControl(GhostControl.class).getOverlappingCount();
         if(count>2)
-        {
+        {            
 //            if(npcStatus.takeDamage(this))
 //            {
 //                kill();

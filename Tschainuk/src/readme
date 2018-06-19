@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # JMonkeyGameNeutral
 
 ## Idee
@@ -32,3 +33,11 @@ Pfeiltasten - Kamera
 <V>- Zeigt momentane Stats an
 Linke Maustaste - schießen
 ShiftL zum Sprinten
+=======
+Herzlich wilkommen zu unserem Spiel:
+Die wichtigsten Controls sind wie folgt:
+-WASD zum Bewegen
+-ShiftL zum Sprinten
+-V für Spielerstatistiken
+Wichtig: eine hohe Framerate ist nötig um das Spiel ohne Kameraprobleme zu spielen
+>>>>>>> 928a34fccb634eff9f6ef014bbaf3c7dd695d2a1
