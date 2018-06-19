@@ -48,14 +48,19 @@
         
     </screen>
     <screen id="backpack">
-        <layer backgroundColor="#bb7342" childLayout="horizontal">
+        <layer backgroundColor="#bb7342" childLayout="horizontal" >
+           <panel childLayout="vertical">
              <image  filename="DisplayImages/backpack.png" height="385" width="385"></image>
-            <panel backgroundColor="#6E4C35" childLayout="vertical">
+             <control id="empty" text="Your bag is currently empty" name="label"></control>
+           </panel>
+            <panel inset="10px" backgroundColor="#6E4C35" childLayout="vertical" id="layerOuter">
             <image id="item1" filename="DisplayImages/backpack.png" height="100" width="100"></image>
+            <control id="item1Amount" name="label" text="Amount: ..."></control>
             <control id="lblitem1" name="label" text="............................."></control>
             <control name="label" text="Press U to use"></control>
                                         
             </panel>
+            
         </layer>
     </screen>
     

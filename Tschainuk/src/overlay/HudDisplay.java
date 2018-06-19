@@ -101,8 +101,15 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
 
     void displayItems(Object[] currentItems,Screen screen) {
         this.screen=screen;
+        System.out.println("current Items length"+currentItems.length);
+        
+        if(currentItems.length>0){
+        Element emp= this.screen.findElementById("empty");
+        emp.setVisible(false);
         for(int i=0;i< currentItems.length;i++)
         {
+            Element layer= this.screen.findElementById("layerOuter");
+            layer.setVisible(true);
             System.out.println("Screen null "+screen==null);
             String path = ((Item)currentItems[i]).getType().getImagePath();
             String panelname= "item"+(i+1);
@@ -114,10 +121,21 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
            img.getRenderer(ImageRenderer.class).setImage(newImage);
            Element lbl = this.screen.findElementById("lblitem"+(i+1));
             lbl.getRenderer(TextRenderer.class).setText(((Item)currentItems[i]).getType().getName());
-            itemIndex=0;
+            Element lbla = this.screen.findElementById("item"+(i+1)+"Amount");
+            lbla.getRenderer(TextRenderer.class).setText("Amount: "+((Item)currentItems[i]).getAmount());
+            
+            itemIndex=i;
         
             
           
+        }
+        }
+        else
+        {
+            Element layer= this.screen.findElementById("layerOuter");
+            layer.setVisible(false);
+            Element emp= this.screen.findElementById("empty");
+            emp.setVisible(true);
         }
     }
     class TT extends TimerTask

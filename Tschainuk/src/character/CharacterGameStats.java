@@ -155,6 +155,7 @@ public class CharacterGameStats extends Observable{
         modif= new ArrayList();
         myItems= new ArrayList<>();
         Item i = new Item(ItemEnum.HEALING_HERB);
+        i.setAmount(3);
         myItems.add(i);
        
         
@@ -222,8 +223,7 @@ public class CharacterGameStats extends Observable{
                totalStats.put(StatEnum.HPNow, HPNeu);
             }
         }
-        setChanged();
-        notifyObservers();
+        
         i.setAmount(i.getAmount()-1);
         if(i.getAmount()==0)
         {
@@ -231,10 +231,5 @@ public class CharacterGameStats extends Observable{
         }
         
     }
-  
-    
-
-              
-       
 
 }

@@ -60,7 +60,7 @@ public class GUIListener implements ActionListener,Observer{
     
      if(isPressed)
      {
-         if(name.equals("CPressed"))
+         if(name.equals("CPressed")&&!end)
          {
        if(counter==0)
        {
@@ -86,7 +86,7 @@ public class GUIListener implements ActionListener,Observer{
         
        }
          }
-         else if(name.equals("LeftMouse"))
+         else if(name.equals("LeftMouse")&&!end)
          {
              
              hud.gunShot();
@@ -95,7 +95,7 @@ public class GUIListener implements ActionListener,Observer{
          {
              System.exit(0);
          }
-         else if (name.equals("BPressed"))
+         else if (name.equals("BPressed")&&!end)
           {
                vp.removeProcessor(niftyDisplay);
              Nifty nifty = niftyDisplay.getNifty();
@@ -107,9 +107,22 @@ public class GUIListener implements ActionListener,Observer{
                 hud.displayItems(cgs.getCurrentItems(),niftyDisplay.getNifty().getScreen("backpack"));
                 vp.addProcessor(niftyDisplay);
             }
-         else if(name.equals("UPressed"))
+         else if(name.equals("UPressed")&&!end)
          {
-             cgs.useItem(hud.getItemIndex());
+             int index=hud.getItemIndex();
+             if(cgs.getCurrentItems().length>0&&index<cgs.getCurrentItems().length)
+             {
+                cgs.useItem(hud.getItemIndex());
+                vp.removeProcessor(niftyDisplay);
+                Nifty nifty = niftyDisplay.getNifty();
+             
+              
+                nifty.registerScreenController(hud);
+                nifty.fromXml("DisplayImages/HudXML.xml", "backpack", hud);
+             
+                hud.displayItems(cgs.getCurrentItems(),niftyDisplay.getNifty().getScreen("backpack"));
+                vp.addProcessor(niftyDisplay);
+             }
          }
         
          
