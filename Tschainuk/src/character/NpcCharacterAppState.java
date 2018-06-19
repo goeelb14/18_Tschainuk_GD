@@ -33,6 +33,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Camera flyCam;
     private Spatial npc;
     private NpcStatus npcStatus;
+    private int damageCooldown = 100;
     
     public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs)
     {
@@ -124,7 +125,15 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         
         if(dist < 3f)
         {
+            if(damageCooldown<=0)
+            {
             npcStatus.playerDamage((NpcCharacterAppState)this);
+            damageCooldown = 200;
+            }
+            else
+            {
+                damageCooldown--;
+            }
         }
     }
 
@@ -137,7 +146,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     @Override
     public void physicsTick(PhysicsSpace space, float tpf) {
         int count = npc.getControl(GhostControl.class).getOverlappingCount();
-        if(count>2)
+        if(count>=3)
         {            
 //            if(npcStatus.takeDamage(this))
 //            {
