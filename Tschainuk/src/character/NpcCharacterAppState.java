@@ -35,7 +35,11 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Spatial npc;
     private NpcStatus npcStatus;
     private int damageCooldown = 100;
+<<<<<<< HEAD
    
+=======
+    private boolean npcDead = false;
+>>>>>>> 2395fecfd6473bca3f243daf90eb979055a5bc21
     
     public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs)
     {
@@ -64,13 +68,18 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     //"Tötet" den Npc
     private void kill()
     {
-        npc.rotate(FastMath.DEG_TO_RAD * 90, 0 , 0);
         npc.getControl(BetterCharacterControl.class).setEnabled(false);
+        npc.rotate(FastMath.DEG_TO_RAD * 90, 0 , 0);
+        
     }
     
     @Override
     public void update(float tpf)
     {
+        if(npcDead)
+        {
+            kill();
+        }
         moveNpc();
     }
     
@@ -156,11 +165,15 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     @Override
     public void physicsTick(PhysicsSpace space, float tpf) {
         int count = npc.getControl(GhostControl.class).getOverlappingCount();
-        if(count>=3)
+        if(count>3)
         {            
            if(npcStatus.takeDamage(this))
             {
+<<<<<<< HEAD
               // kill();
+=======
+             npcDead = true;   
+>>>>>>> 2395fecfd6473bca3f243daf90eb979055a5bc21
             }
         }
     }
