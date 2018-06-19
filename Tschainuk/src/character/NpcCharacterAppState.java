@@ -35,29 +35,23 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Spatial npc;
     private NpcStatus npcStatus;
     private int damageCooldown = 100;
-<<<<<<< HEAD
     private Vector3f startingPos;
     private String npcName;
-=======
     private boolean madeSounds;
     
->>>>>>> 6028c05638c18904e32c676dd489debe0aa3c8f9
     private boolean npcDead = false;
 
     
     public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs, Node rootNode,AssetManager assetManager, NpcStatus npcStatus, Vector3f startingPos, String npcName)
     {
         this.bulletAppState = bulletAppState;
-<<<<<<< HEAD
         this.startingPos = startingPos;
         this.npcStatus = npcStatus;
         this.npcName = npcName;
-=======
        
         npcStatus = new NpcStatus(guid,cgs,rootNode);
         npcStatus.setAssetManager(assetManager);
         madeSounds=false;
->>>>>>> 6028c05638c18904e32c676dd489debe0aa3c8f9
     }
     
     @Override
@@ -90,9 +84,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
        
         if(npcDead)
         {
-<<<<<<< HEAD
              System.out.println("UPDATE NPC DEAD:" + npcName);
-=======
             if(!madeSounds)
             {
             madeSounds=true;
@@ -106,7 +98,6 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
              death.play(); 
              rootNode.detachChild(death);
             }
->>>>>>> 6028c05638c18904e32c676dd489debe0aa3c8f9
             kill();
         }
         moveNpc();
