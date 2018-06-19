@@ -21,7 +21,7 @@ public class Item
     public Item(ItemEnum type)
     {
         this.type=type;
-        this.amount=0;
+        this.amount=1;
     }
     public SkillModifier getModifier()
     {
@@ -34,5 +34,9 @@ public class Item
     public int getAmount()
     {
         return amount;
+    }
+    public ItemEnum getType()
+    {
+        return type;
     }
 }

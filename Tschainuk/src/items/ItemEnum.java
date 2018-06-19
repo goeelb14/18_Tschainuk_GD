@@ -13,13 +13,19 @@ import fight.SkillModifier;
  * @author Marina
  */
 public enum ItemEnum {
-   HEALING_HERB("Healing Herb", new SkillModifier("Healing Herb,",30,true,StatEnum.HPNow));
+   HEALING_HERB("Healing Herb", new SkillModifier("Healing Herb,",30,true,StatEnum.HPNow),"ItemSprites/healingherb.png");
     private String name;
     SkillModifier mod;
-    ItemEnum(String name, SkillModifier mod)
+    private String imagePath;
+    ItemEnum(String name, SkillModifier mod, String imagePath)
     {
        this.name=name;
        this.mod=mod;
+       this.imagePath=imagePath;
+    }
+    public String getImagePath()
+    {
+        return imagePath;
     }
     public String getName()
     {

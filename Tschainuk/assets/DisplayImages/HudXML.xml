@@ -21,18 +21,18 @@
             <panel childLayout="horizontal" >
                 <panel width="450" height="*"></panel> 
                 <panel  height="*" childLayout="vertical" >
-                 <panel childLayout="horizontal">   
-                     <control id= "lblLevel" name="label"  text="Current Level: 1"></control>
-                 </panel>
-                 <panel childLayout="horizontal">
-                     <control id="lblHP" name="label" text="Current HP:............ "></control>
+                    <panel childLayout="horizontal">   
+                        <control id= "lblLevel" name="label"  text="Current Level: 1"></control>
+                    </panel>
+                    <panel childLayout="horizontal">
+                        <control id="lblHP" name="label" text="Current HP:............ "></control>
                      
-                 </panel>
-                 <panel childLayout="center" backgroundColor="#000000" height="30" width="300">
-                     <panel childLayout="horizontal" height="24" width="294">
-                       <panel id="lifeBar" height="*" width="*"   backgroundColor="#1cae1c"/>
-                     </panel>
-                 </panel>
+                    </panel>
+                    <panel childLayout="center" backgroundColor="#000000" height="30" width="300">
+                        <panel childLayout="horizontal" height="24" width="294">
+                            <panel id="lifeBar" height="*" width="*"   backgroundColor="#1cae1c"/>
+                        </panel>
+                    </panel>
                      
                      
                 </panel>
@@ -46,6 +46,17 @@
     <screen id="EndScreen">
         <layer backgroundImage="DisplayImages/Endpage.png" height="*" width="*"></layer>
         
+    </screen>
+    <screen id="backpack">
+        <layer backgroundColor="#bb7342" childLayout="horizontal">
+             <image  filename="DisplayImages/backpack.png" height="385" width="385"></image>
+            <panel backgroundColor="#6E4C35" childLayout="vertical">
+            <image id="item1" filename="DisplayImages/backpack.png" height="100" width="100"></image>
+            <control id="lblitem1" name="label" text="............................."></control>
+            <control name="label" text="Press U to use"></control>
+                                        
+            </panel>
+        </layer>
     </screen>
     
     

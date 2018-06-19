@@ -82,6 +82,10 @@ public class Main extends SimpleApplication
         inputManager.addMapping("LeftMouse", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addListener(guiL, "EPressed");
         inputManager.addMapping("EPressed", new KeyTrigger(KeyInput.KEY_E));
+        inputManager.addListener(guiL, "BPressed");
+        inputManager.addMapping("BPressed", new KeyTrigger(KeyInput.KEY_B));
+        inputManager.addListener(guiL, "UPressed");
+        inputManager.addMapping("UPressed", new KeyTrigger(KeyInput.KEY_U));
         
         inputManager.addListener(guiL, "LeftMouse");
         

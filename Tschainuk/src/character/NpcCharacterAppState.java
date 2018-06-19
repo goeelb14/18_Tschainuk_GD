@@ -20,6 +20,9 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import fight.NpcStatus;
+import items.Item;
+import items.ItemEnum;
+import java.util.ArrayList;
 import overlay.GUIListener;
 import overlay.HudDisplay;
 
@@ -36,7 +39,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private NpcStatus npcStatus;
     private int damageCooldown = 100;
     private boolean madeSounds;
-    
+ 
     private boolean npcDead = false;
 
     
@@ -47,6 +50,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         npcStatus = new NpcStatus(guid,cgs,rootNode);
         npcStatus.setAssetManager(assetManager);
         madeSounds=false;
+        
     }
     
     @Override

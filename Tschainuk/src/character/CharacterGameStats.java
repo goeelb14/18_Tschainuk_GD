@@ -6,6 +6,8 @@
 package character;
 
 import fight.SkillModifier;
+import items.Item;
+import items.ItemEnum;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +21,10 @@ import java.util.Observer;
  */
 public class CharacterGameStats extends Observable{
     
-    Map<StatEnum, Integer> baseStats;
-    Map<StatEnum, Integer> totalStats;
-    List<SkillModifier> modif;
+    private Map<StatEnum, Integer> baseStats;
+    private Map<StatEnum, Integer> totalStats;
+    private List<SkillModifier> modif;
+    private List<Item> myItems;
    
     
     
@@ -143,11 +146,18 @@ public class CharacterGameStats extends Observable{
         baseStats.put(StatEnum.Luck, 20);
         totalStats= new HashMap<>(baseStats);
         exp=0;
-        modif= new ArrayList<>();
+        modif= new ArrayList();
+        myItems= new ArrayList<>();
+        Item i = new Item(ItemEnum.HEALING_HERB);
+        myItems.add(i);
        
         
         
         
+    }
+    public Object[] getCurrentItems()
+    {
+        return myItems.toArray();
     }
     public int getStat(StatEnum stat)
     {
@@ -181,6 +191,28 @@ public class CharacterGameStats extends Observable{
        
        
    }
+
+    public void useItem(int itemIndex) {
+        Item i = myItems.get(itemIndex
+        
+        );
+        SkillModifier sk= i.getModifier();
+        if(sk.getAffectedStat()==StatEnum.HPNow)
+        {
+            double v= sk.getStatBonus();
+            if(sk.isTotalValue())
+            {
+               int HPNeu=(int)(v+getStat(StatEnum.HPNow));
+               if(HPNeu>getStat(StatEnum.HPMax))
+               {
+                   HPNeu=getStat(StatEnum.HPMax);
+               }
+               totalStats.put(StatEnum.HPNow, HPNeu);
+            }
+        }
+        setChanged();
+        notifyObservers();
+    }
   
     
 }

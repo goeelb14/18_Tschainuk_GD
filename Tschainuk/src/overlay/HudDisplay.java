@@ -27,6 +27,7 @@ import de.lessvoid.nifty.render.NiftyImage;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.SizeValue;
+import items.Item;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
@@ -50,7 +51,7 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
   private Node rootNode;
   private NiftyJmeDisplay niftyDisplay;
   private AssetManager assetManager;
-    
+    private int itemIndex;
 
     public HudDisplay(Node rootNode, AssetManager assetManager,NiftyJmeDisplay niftyDisplay) {
        this.rootNode=rootNode;
@@ -58,6 +59,7 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
        this.niftyDisplay=niftyDisplay;
        this.nifty=niftyDisplay.getNifty();
        this.screen=nifty.getScreen("HUDScreen");
+       
        
        
     }
@@ -91,6 +93,32 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
         
             
       
+    }
+    public int getItemIndex()
+    {
+        return itemIndex;
+    }
+
+    void displayItems(Object[] currentItems,Screen screen) {
+        this.screen=screen;
+        for(int i=0;i< currentItems.length;i++)
+        {
+            System.out.println("Screen null "+screen==null);
+            String path = ((Item)currentItems[i]).getType().getImagePath();
+            String panelname= "item"+(i+1);
+            System.out.println("panelname"+panelname);
+            Element img= this.screen.findElementById(panelname);
+            
+            System.out.println(path);
+           NiftyImage newImage = nifty.getRenderEngine().createImage(this.screen,path, false);
+           img.getRenderer(ImageRenderer.class).setImage(newImage);
+           Element lbl = this.screen.findElementById("lblitem"+(i+1));
+            lbl.getRenderer(TextRenderer.class).setText(((Item)currentItems[i]).getType().getName());
+            itemIndex=0;
+        
+            
+          
+        }
     }
     class TT extends TimerTask
     {

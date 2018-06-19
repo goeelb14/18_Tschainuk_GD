@@ -95,9 +95,25 @@ public class GUIListener implements ActionListener,Observer{
          {
              System.exit(0);
          }
+         else if (name.equals("BPressed"))
+          {
+               vp.removeProcessor(niftyDisplay);
+             Nifty nifty = niftyDisplay.getNifty();
+             
+              
+            nifty.registerScreenController(hud);
+             nifty.fromXml("DisplayImages/HudXML.xml", "backpack", hud);
+             
+                hud.displayItems(cgs.getCurrentItems(),niftyDisplay.getNifty().getScreen("backpack"));
+                vp.addProcessor(niftyDisplay);
+            }
+         else if(name.equals("UPressed"))
+         {
+             cgs.useItem(hud.getItemIndex());
+         }
         
-       
-    }
+         
+         }
     }
 
     @Override
