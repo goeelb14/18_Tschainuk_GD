@@ -38,7 +38,7 @@ public class CharacterGameStats extends Observable{
     public long WhenNextLevel()
     {
         int level=baseStats.get(StatEnum.Level);
-        long erg=3;
+        long erg=0;
         for(int i =1;i<=level;i++)
         {
             erg+= Math.round((Math.pow(level, 3)*7/8));
