@@ -5,6 +5,9 @@
  */
 package character;
 
+import com.jme3.asset.AssetManager;
+import com.jme3.audio.AudioNode;
+import com.jme3.scene.Node;
 import fight.SkillModifier;
 import items.Item;
 import items.ItemEnum;
@@ -25,6 +28,7 @@ public class CharacterGameStats extends Observable{
     private Map<StatEnum, Integer> totalStats;
     private List<SkillModifier> modif;
     private List<Item> myItems;
+    private boolean newLevel;
    
     
     
@@ -41,6 +45,7 @@ public class CharacterGameStats extends Observable{
         }
         return erg-exp;
     }
+   
     
     public boolean NextLevelReached(long exp)
     {
@@ -48,11 +53,22 @@ public class CharacterGameStats extends Observable{
         this.exp+=exp;
         while(this.exp>=WhenNextLevel())
         {
+
             levelupdate();
+            newLevel=true;
             
         }
         System.out.println("LEvel: "+getStat(StatEnum.Level));
         return level != getStat(StatEnum.Level);
+    }
+    public boolean wasNewLevel()
+    {
+        if(newLevel)
+        {
+            newLevel=false;
+            return true;
+        }
+        return false;
     }
     
     private void levelupdate()
@@ -157,6 +173,7 @@ public class CharacterGameStats extends Observable{
         Item i = new Item(ItemEnum.HEALING_HERB);
         i.setAmount(3);
         myItems.add(i);
+        newLevel=false;
        
         
         

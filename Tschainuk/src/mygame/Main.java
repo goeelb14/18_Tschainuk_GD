@@ -21,6 +21,7 @@ import de.lessvoid.nifty.Nifty;
 import overlay.GUIListener;
 //import overlay.HudDisplay;
 import overlay.HudDisplay;
+import character.SpawnListener;
 import overlay.StartDisplay;
 import overlay.StatsListener;
 
@@ -91,9 +92,10 @@ public class Main extends SimpleApplication
         MapAppState mas = new MapAppState(bulletAppState);
       
         NpcManager man = new NpcManager(bulletAppState, guiL, cgs, rootNode, assetManager, stateManager);
-        man.spawnNpc(new Vector3f(-15f, 0, 0));
-        man.spawnNpc(new Vector3f(-15f, 0, -3));
-        man.spawnNpc(new Vector3f(-18f, 0, 0));
+        SpawnListener sp = new SpawnListener(man);
+        inputManager.addListener(sp, "CPressed");
+        inputManager.addMapping("CPressed", new KeyTrigger(KeyInput.KEY_C));
+       
 
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
         GunActionAppState gaas = new GunActionAppState(bulletAppState);

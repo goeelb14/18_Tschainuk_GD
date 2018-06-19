@@ -17,6 +17,7 @@ public class Enemy
 {
      private Map<StatEnum, Integer> stats;
      private  EnemyEnum type;
+     private boolean isDead;
 
 
      private int expWorth;
@@ -24,7 +25,17 @@ public class Enemy
      {
          this.type=type;
          initialize();
+         isDead=false;
      }
+     public boolean isDead()
+     {
+         return isDead;
+     }
+     public void declareDead()
+     {
+         isDead=true;
+     }
+             
       private void initialize()
     {
         stats = new HashMap<>();
@@ -53,6 +64,7 @@ public class Enemy
          if(damage>=currentHP)
          {
              stats.put(StatEnum.HPNow, 0);
+            
          }
          else
          {

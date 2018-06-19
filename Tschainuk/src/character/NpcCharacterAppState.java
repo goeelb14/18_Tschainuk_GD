@@ -92,13 +92,22 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
             madeSounds=true;
             
              System.out.println("UPDATE NPC DEAD");
-          AudioNode death= new AudioNode(assetManager,"music/DeadHadler.wav");
+            AudioNode death= new AudioNode(assetManager,"music/DeadHadler.wav");
              death.setPositional(false);
              death.setLooping(false);
              rootNode.attachChild(death);     
              
              death.play(); 
              rootNode.detachChild(death);
+             if(npcStatus.getPlayerStats().wasNewLevel())
+             {
+                AudioNode aud= new AudioNode(assetManager,"music/levelUp.wav");
+                aud.setPositional(false);
+                aud.setLooping(false);
+                rootNode.attachChild(aud);     
+             
+             aud.play();  
+             }
             }
             kill();
         }

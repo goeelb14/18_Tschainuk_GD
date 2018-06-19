@@ -34,6 +34,7 @@ private Node rootNode;
     this.player=player;
     player.addObserver(guid);
     this.rootNode=rootNode;
+   
  }
  
  public void setAssetManager(AssetManager asset)
@@ -65,11 +66,12 @@ private Node rootNode;
     int damage = combat.calcDamage(player, npcMap.get(character), true); // Schaden von Angriff kalkulieren
     npcMap.get(character).takeDamage(damage); //Gegner Schaden zufügen
     
-    if(npcMap.get(character).getStat(StatEnum.HPNow)<= 0)
+    if(npcMap.get(character).getStat(StatEnum.HPNow)<=0&&!npcMap.get(character).isDead())
     {
+        npcMap.get(character).declareDead();
         player.NextLevelReached(npcMap.get(character).getExpWorth());
         System.out.println("LevelUpdate");
-
+           
         return true;        
     }   
      return false;

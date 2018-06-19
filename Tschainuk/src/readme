@@ -27,12 +27,6 @@ In jeder Stadt gibt es eine Story/Quest (jemand verschwindet oder was auch immer
 Voxel/Pixel - basiert
 
 ##Steuerung
-wasd- Bewegung
-Pfeiltasten - Kamera
-<C>- Continue wenn Texte erscheinen
-<V>- Zeigt momentane Stats an
-Linke Maustaste - schießen
-ShiftL zum Sprinten
 =======
 Herzlich wilkommen zu unserem Spiel:
 Die wichtigsten Controls sind wie folgt:
@@ -41,5 +35,6 @@ Die wichtigsten Controls sind wie folgt:
 -V für Spielerstatistiken
 -B für Backpack
 -C immer für Zurück
-Wichtig: eine hohe Framerate ist nötig um das Spiel ohne Kameraprobleme zu spielen
+-Linke Maustaste zum schießen
+Wichtig: eine hohe Framerate ist nötig, um das Spiel ohne Kameraprobleme zu spielen
 
