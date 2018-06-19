@@ -6,6 +6,7 @@
 package overlay;
 
 import character.CharacterGameStats;
+import character.StatEnum;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
@@ -90,6 +91,7 @@ public class GUIListener implements ActionListener,Observer{
        nifty.registerScreenController(hud);
        
       nifty.fromXml("DisplayImages/HudXML.xml", "HUDScreen", hud);
+          
       hud.update(niftyDisplay.getNifty().getScreen("HUDScreen"),(CharacterGameStats)o);
        
         vp.addProcessor(niftyDisplay);

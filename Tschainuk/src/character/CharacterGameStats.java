@@ -165,6 +165,8 @@ public class CharacterGameStats extends Observable{
          {
              totalStats.put(StatEnum.HPNow, currentHP-damage);
          }
+         setChanged();
+         notifyObservers();
       }
      
    public void addObserver(Observer o)
