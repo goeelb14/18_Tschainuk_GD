@@ -128,16 +128,14 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
             if(damageCooldown<=0)
             {
             npcStatus.playerDamage((NpcCharacterAppState)this);
-<<<<<<< HEAD
-            
-=======
+
             damageCooldown = 200;
             }
             else
             {
                 damageCooldown--;
             }
->>>>>>> ccd144fbe92874550fc504c66babdb0e2901541b
+
         }
     }
 

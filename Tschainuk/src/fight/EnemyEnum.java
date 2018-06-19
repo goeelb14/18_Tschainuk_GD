@@ -23,11 +23,10 @@ public enum EnemyEnum
     private int expWorth;
     EnemyEnum(String name, int level, int hp_max, int defense, int strength, int luck, int expWorth)
     {
-<<<<<<< HEAD
-=======
+
         System.out.println("EnemyEnum Initialize");
         System.out.println(StatEnum.Defense);
->>>>>>> ccd144fbe92874550fc504c66babdb0e2901541b
+
         stats=new HashMap<>();
         this.name=name;
         this.expWorth=expWorth;
@@ -35,13 +34,10 @@ public enum EnemyEnum
         stats.put(StatEnum.Defense,defense);
         stats.put(StatEnum.Strength,strength);
         stats.put(StatEnum.Luck,luck);
-<<<<<<< HEAD
 
         stats.put(StatEnum.Level,level);
 
-=======
-        stats.put(StatEnum.Level, level);
->>>>>>> ccd144fbe92874550fc504c66babdb0e2901541b
+
     }
     public int getStat(StatEnum stat)
     {

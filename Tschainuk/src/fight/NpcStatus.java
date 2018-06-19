@@ -36,13 +36,12 @@ public class NpcStatus
      int playerDamage = combat.calcDamage(player, npcMap.get(npc), false);
      System.out.println("Damage:" + playerDamage);
      player.takeDamage(playerDamage);
-<<<<<<< HEAD
-=======
+
      if(player.getStat(StatEnum.HPNow)<=0)
      {
          
      }
->>>>>>> ccd144fbe92874550fc504c66babdb0e2901541b
+
      return true;
  }
 
