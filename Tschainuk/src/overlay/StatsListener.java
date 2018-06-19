@@ -27,7 +27,6 @@ public class StatsListener implements ActionListener{
         this.niftyDisplay=niftyDisplay;
         sd= new StatsDisplay(niftyDisplay,cgs);
       
-     
        
     }
     @Override

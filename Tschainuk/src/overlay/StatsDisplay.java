@@ -74,16 +74,7 @@ public class StatsDisplay extends AbstractAppState implements ScreenController {
         lblLevel.getRenderer(TextRenderer.class).setText("Current Level: " +cgs.getStat(StatEnum.Level));
         Element lblNextLevel = this.screen.findElementById("NextLevel");
         lblNextLevel.getRenderer(TextRenderer.class).setText("Exp until next Level: " +cgs.WhenNextLevel());
-       
-//
-//        Label lblStrength= this.screen.findNiftyControl("Strength", Label.class);
-//        lblStrength.setText("Strength: " +cgs.getStat(StatEnum.Strength));
-//        Label lblDefense= this.screen.findNiftyControl("Defense", Label.class);
-//        lblDefense.setText("Defense: " +cgs.getStat(StatEnum.Defense));
-//        Label lblLuck= this.screen.findNiftyControl("Luck", Label.class);
-//        lblDefense.setText("Luck: " +cgs.getStat(StatEnum.Luck));
-//        Label lblNextLevel= this.screen.findNiftyControl("Luck", Label.class);
-//        lblNextLevel.setText("Next Level: " +cgs.WhenNextLevel());
+
   }
   
   
