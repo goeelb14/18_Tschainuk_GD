@@ -30,7 +30,7 @@ public class Combat
             int damage = Math.round((float)(attack*1.5-defense)*5/7);
             if(damage<=0)
             {
-                int i = r.nextInt(1);
+                int i = r.nextInt(2);
                 if(i==1)
                 {
                     damage=1;
@@ -53,7 +53,7 @@ public class Combat
         {
             int attack = enemy.getStat(StatEnum.Strength);
             int defense = player.getStat(StatEnum.Defense);
-            int damage = Math.round((float)(attack*1.5-defense)*5/7);
+            int damage = Math.round((float)(attack*3-defense)*5/7);
             if(damage<=0)
             {
                 int i = r.nextInt(1);

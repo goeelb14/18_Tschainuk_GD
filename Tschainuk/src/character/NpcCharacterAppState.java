@@ -93,7 +93,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         cont.setEnabled(true);
         npcNode.addControl(cont);
         
-        //npcStatus.registerNpc((NpcCharacterAppState)this);
+        npcStatus.registerNpc((NpcCharacterAppState)this);
         
         bulletAppState.getPhysicsSpace().add(npcNode);
         bulletAppState.getPhysicsSpace().add(cont);
