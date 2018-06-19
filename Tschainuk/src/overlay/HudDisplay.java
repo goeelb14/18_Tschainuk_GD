@@ -124,12 +124,12 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
      //  CharacterGameStats cgs= (CharacterGameStats)o;
        Element lblHP = this.screen.findElementById("lblHP");
        //lblHP.getRenderer(TextRenderer.class).setText("Current HP: "+ cgs.getStat(StatEnum.HPNow)+"/"+cgs.getStat(StatEnum.HPMax));
-        lblHP.getRenderer(TextRenderer.class).setText("Current HP: "+cgs.getStat(StatEnum.HPNow));
+        lblHP.getRenderer(TextRenderer.class).setText("Current HP: "+cgs.getStat(StatEnum.HPNow) +"/" +cgs.getStat(StatEnum.HPMax));
         Element lblLevel = this.screen.findElementById("lblLevel");
         
         lblLevel.getRenderer(TextRenderer.class).setText("Current Level: "+ cgs.getStat(StatEnum.Level));
         Element pnlBar= this.screen.findElementById("lifeBar");
-        int hpbar= cgs.getStat(StatEnum.HPNow)/cgs.getStat(StatEnum.HPMax)*294;
+        int hpbar= Math.round(new Float(cgs.getStat(StatEnum.HPNow))/cgs.getStat(StatEnum.HPMax)*294);
         pnlBar.setConstraintWidth(new SizeValue(hpbar+"px"));
       //niftyDisplay.getNifty().update();
         

@@ -5,6 +5,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.bullet.PhysicsTickListener;
@@ -34,6 +35,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Spatial npc;
     private NpcStatus npcStatus;
     private int damageCooldown = 100;
+   
     
     public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs)
     {
@@ -129,7 +131,13 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
             {
             npcStatus.playerDamage((NpcCharacterAppState)this);
 
-            damageCooldown = 200;
+            damageCooldown = 100;
+            AudioNode aud = new AudioNode(assetManager,"music/hadler.wav");
+            aud.setLooping(false);
+            aud.setPositional(false);
+            rootNode.attachChild(aud);
+            
+            aud.play();
             }
             else
             {
@@ -152,7 +160,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         {            
            if(npcStatus.takeDamage(this))
             {
-               kill();
+              // kill();
             }
         }
     }

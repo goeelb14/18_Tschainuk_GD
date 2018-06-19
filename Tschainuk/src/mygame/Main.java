@@ -60,17 +60,20 @@ public class Main extends SimpleApplication
         aud= new AudioNode(assetManager,"music/SteamTrack.wav");
         aud.setPositional(false);
         rootNode.attachChild(aud);
+        aud.setLooping(true);
+        aud.play();
          niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, guiViewPort);
         hud=new HudDisplay(this.rootNode,assetManager,niftyDisplay);    
         di= new StartDisplay(niftyDisplay);
-        aud.setLooping(true);
-        aud.play();
-         guiL= new GUIListener(guiViewPort,niftyDisplay,hud);
+        
+         guiL= new GUIListener(guiViewPort,niftyDisplay,hud,aud, rootNode, assetManager);
          
          
         inputManager.addMapping("CPressed", new KeyTrigger(KeyInput.KEY_C));
         inputManager.addListener(guiL, "CPressed");
         inputManager.addMapping("LeftMouse", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        inputManager.addListener(guiL, "EPressed");
+        inputManager.addMapping("EPressed", new KeyTrigger(KeyInput.KEY_E));
         
         inputManager.addListener(guiL, "LeftMouse");
         

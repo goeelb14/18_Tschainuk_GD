@@ -25,7 +25,7 @@
                      <control id= "lblLevel" name="label"  text="Current Level: 1"></control>
                  </panel>
                  <panel childLayout="horizontal">
-                     <control id="lblHP" name="label" text="Current HP: "></control>
+                     <control id="lblHP" name="label" text="Current HP:............ "></control>
                      
                  </panel>
                  <panel childLayout="center" backgroundColor="#000000" height="30" width="300">
@@ -41,6 +41,10 @@
             
         </layer>
        
+        
+    </screen>
+    <screen id="EndScreen">
+        <layer backgroundImage="DisplayImages/Endpage.png" height="*" width="*"></layer>
         
     </screen>
     
