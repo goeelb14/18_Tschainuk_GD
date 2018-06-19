@@ -16,7 +16,7 @@
         </layer>
     </screen>
     <screen id="HUDScreen">
-        <layer backgroundImage="DisplayImages/HudNeu.png"  childLayout="vertical">
+        <layer id="layerHUD" backgroundImage="DisplayImages/HudNeu.png"  childLayout="vertical">
             <panel height="880" width="100%" ></panel>
             <panel childLayout="horizontal" >
                 <panel width="450" height="*"></panel> 
@@ -43,4 +43,7 @@
        
         
     </screen>
+    
+    
+   
 </nifty>

@@ -12,24 +12,28 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.renderer.ViewPort;
 import de.lessvoid.nifty.Nifty;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author Marina
  */
-public class GUIListener implements ActionListener{
+public class GUIListener implements ActionListener,Observer{
 
     private ViewPort vp; 
     private NiftyJmeDisplay niftyDisplay;
     private int counter = 0;
    private StartDisplay di;
     private HudDisplay hud;
+   
  
     public GUIListener(ViewPort guiViewPort, NiftyJmeDisplay niftyDisplay, HudDisplay hud) {
         vp= guiViewPort;
         this.niftyDisplay=niftyDisplay;
       this.hud=hud;
       di= new StartDisplay(niftyDisplay);
+      
      
        
     }
@@ -57,7 +61,10 @@ public class GUIListener implements ActionListener{
        {
       vp.removeProcessor(niftyDisplay);
        Nifty nifty = niftyDisplay.getNifty();
+       nifty.registerScreenController(hud);
+       
       nifty.fromXml("DisplayImages/HudXML.xml", "HUDScreen", hud);
+     hud.update(nifty.getScreen("HUDScreen"), new CharacterGameStats());
        
         vp.addProcessor(niftyDisplay);
        
@@ -69,8 +76,24 @@ public class GUIListener implements ActionListener{
              
              hud.gunShot();
          }
+        
        
     }
+    }
+
+    @Override
+    public void update(Observable o, Object o1) {
+       if(counter>0)
+       {
+       vp.removeProcessor(niftyDisplay);
+       Nifty nifty = niftyDisplay.getNifty();
+       nifty.registerScreenController(hud);
+       
+      nifty.fromXml("DisplayImages/HudXML.xml", "HUDScreen", hud);
+      hud.update(niftyDisplay.getNifty().getScreen("HUDScreen"),(CharacterGameStats)o);
+       
+        vp.addProcessor(niftyDisplay);
+       }
     }
     
 }

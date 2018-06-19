@@ -1,6 +1,7 @@
 package mygame;
 
 import action.GunActionAppState;
+import character.CharacterGameStats;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.ColorRGBA;
@@ -21,6 +22,7 @@ import overlay.GUIListener;
 //import overlay.HudDisplay;
 import overlay.HudDisplay;
 import overlay.StartDisplay;
+import overlay.StatsListener;
 
 public class Main extends SimpleApplication
 {
@@ -51,14 +53,15 @@ public class Main extends SimpleApplication
     GUIListener guiL;
     AudioNode aud;
    HudDisplay hud;
+   NiftyJmeDisplay niftyDisplay;
     public void niftyInit()
     {
-       hud=new HudDisplay(this.rootNode,assetManager);
+       
         aud= new AudioNode(assetManager,"music/SteamTrack.wav");
         aud.setPositional(false);
         rootNode.attachChild(aud);
-        NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, guiViewPort);
-
+         niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, guiViewPort);
+        hud=new HudDisplay(this.rootNode,assetManager,niftyDisplay);    
         di= new StartDisplay(niftyDisplay);
         aud.setLooping(true);
         aud.play();
@@ -70,6 +73,7 @@ public class Main extends SimpleApplication
         inputManager.addMapping("LeftMouse", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         
         inputManager.addListener(guiL, "LeftMouse");
+        
         setDisplayStatView(false); setDisplayFps(false);
                  
         Nifty nifty = niftyDisplay.getNifty();
@@ -84,12 +88,15 @@ public class Main extends SimpleApplication
        
         
     }
-    
+    private CharacterGameStats cgs;
+    private StatsListener sl;
     private void addAppStates()
     {
+        
         PhysicalCharacterAppState pcas = new PhysicalCharacterAppState(bulletAppState);
         MapAppState mas = new MapAppState(bulletAppState);
-        NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState, hud);
+        cgs=new CharacterGameStats();
+        NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState,guiL,cgs);
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
         GunActionAppState gaas = new GunActionAppState(bulletAppState);
         
@@ -102,6 +109,9 @@ public class Main extends SimpleApplication
         stateManager.attach(hudas);
         stateManager.attach(ncas);
         stateManager.attach(gaas);
+        sl= new StatsListener(guiViewPort,niftyDisplay,cgs);
+        inputManager.addMapping("VPressed", new KeyTrigger(KeyInput.KEY_V));
+        inputManager.addListener(sl, "VPressed");
     }
     
     private void attachBulletAppState()
