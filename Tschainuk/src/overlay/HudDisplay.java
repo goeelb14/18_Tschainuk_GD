@@ -50,9 +50,6 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
   private Node rootNode;
   private NiftyJmeDisplay niftyDisplay;
   private AssetManager assetManager;
-
-   
-
     
 
     public HudDisplay(Node rootNode, AssetManager assetManager,NiftyJmeDisplay niftyDisplay) {

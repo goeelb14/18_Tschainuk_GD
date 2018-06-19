@@ -17,12 +17,22 @@ import fight.SkillModifier;
 public class Item 
 {
     private ItemEnum type;
+    private int amount;
     public Item(ItemEnum type)
     {
         this.type=type;
+        this.amount=0;
     }
     public SkillModifier getModifier()
     {
         return type.getMod();
+    }
+    public void setAmount(int amount)
+    {
+        this.amount=amount;
+    }
+    public int getAmount()
+    {
+        return amount;
     }
 }

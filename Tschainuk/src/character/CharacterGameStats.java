@@ -36,13 +36,13 @@ public class CharacterGameStats extends Observable{
         {
             erg+= Math.round((Math.pow(level, 3)*7/8));
         }
-        return erg;
+        return erg-exp;
         
     }
     public boolean NextLevelReached(long exp)
     {
         this.exp+=exp;
-        if(this.exp>=WhenNextLevel())
+        while(this.exp>=WhenNextLevel())
         {
             levelupdate();
             return true;

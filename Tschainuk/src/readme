@@ -1,6 +1,43 @@
+<<<<<<< HEAD
+# JMonkeyGameNeutral
+
+## Idee
+Semi Open World Spiel mit versch. Challenges
+
+Der Spieler traversiert eine Karte der Spielwelt (Overworld). Auf dieser Karte kann der Spieler zu verschiedenen Orten reisen. Jeder dieser Orte birgt eine eigene Herausforderung.
+
+Dieses Modell erlaubt es uns in den Aspekten der Level Gestaltung und der Art der Challenges kreativ zu sein und verschiedene Sachen auszuprobieren.
+Setting
+Du bist der Roppotta man, der aus einer Welt der Industrie im Steampunkstil stammt. Doch durch ein tragisches Ereignis gelangst du in eine andere, von unbekannten Gestalten
+beherrschte Welt. Wirst du mehr über deine Identität herausfinden und in deine altbekannte Welt zurückkehren?
+
+## Hauptfeatures
+Overworld
+
+
+
+## RPG Game Idee (Uncharted Waters Online):
+Mini Challenges - Karte als Übersicht (Das heißt die Routen zu den Orten sind nicht spielbar)
+Es gibt einen Charakter
+Anfangs kein Klassensystem
+Anfangs ohne Rüstungen
+In jeder Stadt gibt es eine Story/Quest (jemand verschwindet oder was auch immer) und du musst dem auf den Grund gehen
+
+## Grafikstil:
+Voxel/Pixel - basiert
+
+##Steuerung
+wasd- Bewegung
+Pfeiltasten - Kamera
+<C>- Continue wenn Texte erscheinen
+<V>- Zeigt momentane Stats an
+Linke Maustaste - schießen
+ShiftL zum Sprinten
+=======
 Herzlich wilkommen zu unserem Spiel:
 Die wichtigsten Controls sind wie folgt:
 -WASD zum Bewegen
 -ShiftL zum Sprinten
 -V für Spielerstatistiken
 Wichtig: eine hohe Framerate ist nötig um das Spiel ohne Kameraprobleme zu spielen
+>>>>>>> 928a34fccb634eff9f6ef014bbaf3c7dd695d2a1
