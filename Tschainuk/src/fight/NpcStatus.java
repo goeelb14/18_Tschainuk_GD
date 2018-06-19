@@ -8,6 +8,10 @@ package fight;
 import character.CharacterGameStats;
 import character.NpcCharacterAppState;
 import character.StatEnum;
+import com.jme3.app.Application;
+import com.jme3.asset.AssetManager;
+import com.jme3.audio.AudioNode;
+import com.jme3.scene.Node;
 import java.util.HashMap;
 import java.util.Map;
 import overlay.GUIListener;
@@ -23,12 +27,18 @@ public class NpcStatus
  private Map<NpcCharacterAppState, Enemy> npcMap = new HashMap<>();
  
  private Combat combat = new Combat();
+ private AssetManager assetManager;
  private CharacterGameStats player ;// dies ist der Spieler
-
- public NpcStatus(GUIListener guid, CharacterGameStats player)
+private Node rootNode;
+ public NpcStatus(GUIListener guid, CharacterGameStats player, Node rootNode)
  {
     this.player=player;
     player.addObserver(guid);
+    this.rootNode=rootNode;
+ }
+ public void setAssetManager(AssetManager asset)
+ {
+     this.assetManager=asset;
  }
  
  public boolean playerDamage(NpcCharacterAppState npc)
@@ -39,7 +49,7 @@ public class NpcStatus
 
      if(player.getStat(StatEnum.HPNow)<=0)
      {
-         
+        
      }
 
      return true;
@@ -59,7 +69,19 @@ public class NpcStatus
     
     if(npcMap.get(character).getStat(StatEnum.HPNow)<= 0)
     {
+        player.NextLevelReached(npcMap.get(character).getExpWorth());
+       
+//          AudioNode death= new AudioNode(assetManager,"music/DeadHadler.wav");
+//             death.setPositional(false);
+//             death.setLooping(false);
+//             rootNode.attachChild(death);     
+//             
+//             death.play(); 
+//             rootNode.detachChild(death);
+            
+             System.out.println("AudioNode worked");
         return true;
+         
     }
     
      return false;

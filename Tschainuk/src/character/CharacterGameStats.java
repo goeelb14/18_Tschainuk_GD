@@ -41,18 +41,21 @@ public class CharacterGameStats extends Observable{
     }
     public boolean NextLevelReached(long exp)
     {
+        int level = getStat(StatEnum.Level);
         this.exp+=exp;
         while(this.exp>=WhenNextLevel())
         {
             levelupdate();
-            return true;
+            
         }
-        return false;
+        System.out.println("LEvel: "+getStat(StatEnum.Level));
+        return level != getStat(StatEnum.Level);
     }
     private void levelupdate()
     {
         int level = baseStats.get(StatEnum.Level)+1;
         baseStats.put(StatEnum.Level, level);
+        totalStats.put(StatEnum.Level, level);
         if(level%4==0 &&level%7==0)
         {
             baseStats.put(StatEnum.HPMax,

@@ -65,8 +65,8 @@ public class Main extends SimpleApplication
          niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, guiViewPort);
         hud=new HudDisplay(this.rootNode,assetManager,niftyDisplay);    
         di= new StartDisplay(niftyDisplay);
-        
-         guiL= new GUIListener(guiViewPort,niftyDisplay,hud,aud, rootNode, assetManager);
+          cgs=new CharacterGameStats();
+         guiL= new GUIListener(guiViewPort,niftyDisplay,hud,aud, rootNode, assetManager,cgs);
          
          
         inputManager.addMapping("CPressed", new KeyTrigger(KeyInput.KEY_C));
@@ -98,8 +98,8 @@ public class Main extends SimpleApplication
         
         PhysicalCharacterAppState pcas = new PhysicalCharacterAppState(bulletAppState);
         MapAppState mas = new MapAppState(bulletAppState);
-        cgs=new CharacterGameStats();
-        NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState,guiL,cgs);
+      
+        NpcCharacterAppState ncas = new NpcCharacterAppState(bulletAppState,guiL,cgs,rootNode,assetManager);
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
         GunActionAppState gaas = new GunActionAppState(bulletAppState);
         

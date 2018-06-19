@@ -34,10 +34,12 @@ public class GUIListener implements ActionListener,Observer{
    AudioNode aud;
    Node rootNode;
    AssetManager assetManager;
+   CharacterGameStats cgs;
  
    
 
-    public GUIListener(ViewPort guiViewPort, NiftyJmeDisplay niftyDisplay, HudDisplay hud, AudioNode aud, Node rootNode, AssetManager assetManager)
+    public GUIListener(ViewPort guiViewPort, NiftyJmeDisplay niftyDisplay, HudDisplay hud, AudioNode aud, Node rootNode, AssetManager assetManager
+    ,CharacterGameStats cgs)
     { vp= guiViewPort;
         this.niftyDisplay=niftyDisplay;
       this.hud=hud;
@@ -46,9 +48,10 @@ public class GUIListener implements ActionListener,Observer{
       this.aud=aud;
       this.rootNode=rootNode;
       this.assetManager=assetManager;
-
+      this.cgs=cgs;
         
     }
+    
 
  
     
@@ -76,7 +79,7 @@ public class GUIListener implements ActionListener,Observer{
        nifty.registerScreenController(hud);
        
       nifty.fromXml("DisplayImages/HudXML.xml", "HUDScreen", hud);
-     hud.update(nifty.getScreen("HUDScreen"), new CharacterGameStats());
+     hud.update(nifty.getScreen("HUDScreen"), cgs);
        
         vp.addProcessor(niftyDisplay);
        
@@ -114,12 +117,19 @@ public class GUIListener implements ActionListener,Observer{
        
                 vp.addProcessor(niftyDisplay);
                 aud.stop();
+                AudioNode death= new AudioNode(assetManager,"music/DyingRobot.wav");
+                death.setPositional(false);
+                rootNode.attachChild(death);
+                
+                death.setLooping(false);
+                death.play();
                 aud= new AudioNode(assetManager,"music/EndMusic.wav");
                 aud.setPositional(false);
                 rootNode.attachChild(aud);
                 
                 aud.setLooping(true);
                 aud.play();
+                
                 
                
            }

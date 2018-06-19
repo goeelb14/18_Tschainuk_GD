@@ -39,11 +39,12 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private boolean npcDead = false;
 
     
-    public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs)
+    public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs, Node rootNode,AssetManager assetManager)
     {
         this.bulletAppState = bulletAppState;
        
-        npcStatus = new NpcStatus(guid,cgs);
+        npcStatus = new NpcStatus(guid,cgs,rootNode);
+        npcStatus.setAssetManager(assetManager);
     }
     
     @Override
@@ -56,6 +57,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
+     
         
         
         
@@ -66,6 +68,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     //"Tötet" den Npc
     private void kill()
     {
+        
         npc.getControl(BetterCharacterControl.class).setEnabled(false);
         npc.move(-9999f, -9999f, -9999f);
         npc.rotate(FastMath.DEG_TO_RAD * 90, 0 , 0);
@@ -75,8 +78,10 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     @Override
     public void update(float tpf)
     {
+       
         if(npcDead)
         {
+             System.out.println("UPDATE NPC DEAD");
             kill();
         }
         moveNpc();
@@ -168,7 +173,10 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         {            
            if(npcStatus.takeDamage(this))
             {
+                System.out.println("NPC STATUS Dead");
              npcDead = true;   
+             
+             
 
             }
         }
