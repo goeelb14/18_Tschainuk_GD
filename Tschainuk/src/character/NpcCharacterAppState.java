@@ -35,11 +35,9 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Spatial npc;
     private NpcStatus npcStatus;
     private int damageCooldown = 100;
-<<<<<<< HEAD
-   
-=======
+
     private boolean npcDead = false;
->>>>>>> 2395fecfd6473bca3f243daf90eb979055a5bc21
+
     
     public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs)
     {
@@ -169,11 +167,11 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         {            
            if(npcStatus.takeDamage(this))
             {
-<<<<<<< HEAD
+
               // kill();
-=======
+
              npcDead = true;   
->>>>>>> 2395fecfd6473bca3f243daf90eb979055a5bc21
+
             }
         }
     }
