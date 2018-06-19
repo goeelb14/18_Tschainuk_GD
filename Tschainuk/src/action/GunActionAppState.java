@@ -6,21 +6,15 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.PhysicsSpace;
-import com.jme3.bullet.PhysicsTickListener;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
-import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
-import com.jme3.collision.CollisionResult;
-import com.jme3.collision.CollisionResults;
 import com.jme3.input.InputManager;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
@@ -28,9 +22,8 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import java.util.LinkedList;
 import java.util.List;
-import fight.NpcStatus;
 
-public class GunActionAppState extends AbstractAppState implements ActionListener, PhysicsTickListener
+public class GunActionAppState extends AbstractAppState implements ActionListener
 {
     //MainApplication Attributes
     private Node rootNode;
@@ -42,15 +35,12 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     
     private List<Geometry> geoms = new LinkedList<>();
     private Vector3f flugbahn;
-        private Vector3f charLocation;
 
     public GunActionAppState(BulletAppState bulletAppState)
     {
         this.bulletAppState = bulletAppState;
     }
-    
-    private NpcStatus npcStatus;
-    
+        
     @Override
     public void initialize(AppStateManager stateManager, Application app)
     {
@@ -61,9 +51,7 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
         this.stateManager = stateManager;
         this.inputManager = app.getInputManager();
         this.cam = app.getCamera();
-                        
-       // npcStatus = new NpcStatus();
-        
+                                
         setUpMouseButton();
     }
     
@@ -111,16 +99,5 @@ public class GunActionAppState extends AbstractAppState implements ActionListene
     public void onAction(String name, boolean isPressed, float tpf)
     {        
         geoms.add(createGeometry());        
-    }
-
-    @Override
-    public void prePhysicsTick(PhysicsSpace space, float tpf)
-    {
-      
-    }
-
-    @Override
-    public void physicsTick(PhysicsSpace space, float tpf)
-    {
     }
 }
