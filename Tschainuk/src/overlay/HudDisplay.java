@@ -87,7 +87,7 @@ public class HudDisplay extends AbstractAppState implements ScreenController {
         Element layer = this.screen.findElementById("layerHUD");
         layer.getRenderer(ImageRenderer.class).setImage(nifty.createImage(this.screen, "DisplayImages/HudShoot.png", false));
         Timer t = new Timer();
-        t.schedule(new TT(layer,this.screen), 200);
+        t.schedule(new TT(layer,this.screen), 150);
         
             
       

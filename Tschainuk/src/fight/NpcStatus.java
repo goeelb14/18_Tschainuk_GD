@@ -44,6 +44,11 @@ public class NpcStatus
 
      return true;
  }
+ 
+ public CharacterGameStats getPlayerStats()
+ {
+     return player;
+ }
 
 
  

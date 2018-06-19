@@ -15,9 +15,9 @@ import java.util.Map;
  */
 public enum EnemyEnum
 {
-    HADLER("Hadler",2,10,4,3,5,4),
-    BLOBBLEGUM("Blobblegum",4,14,4,5,5,9),
-    MR_CHESS("Mr. Chess",10,56,16,10,40,128);
+    HADLER("Hadler",2,40,4,3,5,4),
+    BLOBBLEGUM("Blobblegum",4,80,4,5,5,9),
+    MR_CHESS("Mr. Chess",10,200,16,10,40,128);
     private String name;
     private Map<StatEnum,Integer> stats;
     private int expWorth;

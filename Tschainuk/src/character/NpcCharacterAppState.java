@@ -67,6 +67,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private void kill()
     {
         npc.getControl(BetterCharacterControl.class).setEnabled(false);
+        npc.move(-9999f, -9999f, -9999f);
         npc.rotate(FastMath.DEG_TO_RAD * 90, 0 , 0);
         
     }
@@ -134,7 +135,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         
         if(dist < 3f)
         {
-            if(damageCooldown<=0)
+            if(damageCooldown<=0&&npcStatus.getPlayerStats().getStat(StatEnum.HPNow)>0)
             {
             npcStatus.playerDamage((NpcCharacterAppState)this);
 
@@ -167,9 +168,6 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         {            
            if(npcStatus.takeDamage(this))
             {
-
-              // kill();
-
              npcDead = true;   
 
             }
