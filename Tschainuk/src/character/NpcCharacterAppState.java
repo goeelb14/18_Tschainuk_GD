@@ -35,16 +35,17 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Spatial npc;
     private NpcStatus npcStatus;
     private int damageCooldown = 100;
-
+    private Vector3f startingPos;
+    private String npcName;
     private boolean npcDead = false;
 
     
-    public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs, Node rootNode,AssetManager assetManager)
+    public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs, Node rootNode,AssetManager assetManager, NpcStatus npcStatus, Vector3f startingPos, String npcName)
     {
         this.bulletAppState = bulletAppState;
-       
-        npcStatus = new NpcStatus(guid,cgs,rootNode);
-        npcStatus.setAssetManager(assetManager);
+        this.startingPos = startingPos;
+        this.npcStatus = npcStatus;
+        this.npcName = npcName;
     }
     
     @Override
@@ -58,10 +59,6 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         this.inputManager = app.getInputManager();
         this.flyCam = app.getCamera();
      
-        
-        
-        
-        
         createNpc();
     }
     
@@ -81,7 +78,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
        
         if(npcDead)
         {
-             System.out.println("UPDATE NPC DEAD");
+             System.out.println("UPDATE NPC DEAD:" + npcName);
             kill();
         }
         moveNpc();
@@ -94,10 +91,10 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         npc.scale(0.15f);
         npc.rotate(0f, FastMath.DEG_TO_RAD * 270, 0);
         
-        Node npcNode = new Node("Npc");
+        Node npcNode = new Node(npcName);
         npcNode.attachChild(npc);
         
-        npcNode.setLocalTranslation(-15f, 0f, 0f);
+        npcNode.setLocalTranslation(startingPos);
         
         BetterCharacterControl npcControl = new BetterCharacterControl(0.825f, 2.2f, 1f);
         npcControl.setGravity(new Vector3f(0, 1.5f, 0));
@@ -105,6 +102,8 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         
         CollisionShape colShape = new CapsuleCollisionShape(0.825f,2.2f);
         GhostControl cont = new GhostControl(colShape);
+        cont.addCollideWithGroup(0);
+        cont.setCollisionGroup(0);
         cont.addCollideWithGroup(1);
         cont.setEnabled(true);
         npcNode.addControl(cont);
@@ -125,9 +124,9 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     //logical movement for npc
     private void moveNpc()
     {
-        npc = rootNode.getChild("Npc");
+        npc = rootNode.getChild(npcName);
         me = rootNode.getChild("MainCharacter");
-
+        
         lookAtMe = npc.getWorldTranslation().subtract(me.getWorldTranslation());
         followMe = me.getWorldTranslation().subtract(npc.getWorldTranslation());
         
@@ -144,7 +143,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
             {
             npcStatus.playerDamage((NpcCharacterAppState)this);
 
-            damageCooldown = 100;
+            damageCooldown = 50;
             AudioNode aud = new AudioNode(assetManager,"music/hadler.wav");
             aud.setLooping(false);
             aud.setPositional(false);
@@ -160,6 +159,16 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
         }
     }
 
+    @Override
+    public int hashCode() {
+        return npcName.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return npcName;
+    }
+    
     @Override
     public void prePhysicsTick(PhysicsSpace space, float tpf) 
     {

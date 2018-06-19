@@ -88,7 +88,7 @@ public class PhysicalCharacterAppState extends AbstractAppState implements Actio
         playerControl = new BetterCharacterControl(1.15f, 3f, 100f);
         playerNode.addControl(playerControl);
         
-//        bulletAppState.setDebugEnabled(true);
+        bulletAppState.setDebugEnabled(true);
 
         //attach player to physicspace
         bulletAppState.getPhysicsSpace().add(playerNode);
