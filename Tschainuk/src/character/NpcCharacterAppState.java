@@ -35,7 +35,8 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Spatial npc;
     private NpcStatus npcStatus;
     private int damageCooldown = 100;
-
+    private boolean madeSounds;
+    
     private boolean npcDead = false;
 
     
@@ -45,6 +46,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
        
         npcStatus = new NpcStatus(guid,cgs,rootNode);
         npcStatus.setAssetManager(assetManager);
+        madeSounds=false;
     }
     
     @Override
@@ -81,7 +83,19 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
        
         if(npcDead)
         {
+            if(!madeSounds)
+            {
+            madeSounds=true;
+            
              System.out.println("UPDATE NPC DEAD");
+          AudioNode death= new AudioNode(assetManager,"music/DeadHadler.wav");
+             death.setPositional(false);
+             death.setLooping(false);
+             rootNode.attachChild(death);     
+             
+             death.play(); 
+             rootNode.detachChild(death);
+            }
             kill();
         }
         moveNpc();

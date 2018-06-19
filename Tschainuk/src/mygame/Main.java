@@ -17,6 +17,13 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 import overlay.GUIListener;
 //import overlay.HudDisplay;
@@ -30,6 +37,7 @@ public class Main extends SimpleApplication
 
     public static void main(String[] args)
     {
+        
         Main app = new Main();
         app.start();
         
