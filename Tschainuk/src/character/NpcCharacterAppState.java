@@ -21,7 +21,6 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import fight.NpcStatus;
 import overlay.GUIListener;
-import overlay.HudDisplay;
 
 public class NpcCharacterAppState extends AbstractAppState implements PhysicsTickListener
 {
@@ -38,10 +37,8 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     private Vector3f startingPos;
     private String npcName;
     private boolean madeSounds;
-    
     private boolean npcDead = false;
 
-    
     public NpcCharacterAppState(BulletAppState bulletAppState, GUIListener guid,CharacterGameStats cgs, Node rootNode,AssetManager assetManager, NpcStatus npcStatus, Vector3f startingPos, String npcName)
     {
         this.bulletAppState = bulletAppState;
@@ -73,7 +70,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
     {
         
         npc.getControl(BetterCharacterControl.class).setEnabled(false);
-        npc.move(-9999f, -9999f, -9999f);
+        npc.move(-9999f, -9999f, -9999f); //nicht performant
         npc.rotate(FastMath.DEG_TO_RAD * 90, 0 , 0);
         
     }
@@ -194,6 +191,7 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
 
     }
 
+    //Prüfen ob NPC von Projektil getroffen wurde
     @Override
     public void physicsTick(PhysicsSpace space, float tpf) {
         int count = npc.getControl(GhostControl.class).getOverlappingCount();
@@ -203,9 +201,6 @@ public class NpcCharacterAppState extends AbstractAppState implements PhysicsTic
             {
                 System.out.println("NPC STATUS Dead");
              npcDead = true;   
-             
-             
-
             }
         }
     }

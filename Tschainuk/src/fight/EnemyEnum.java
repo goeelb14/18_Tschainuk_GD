@@ -23,7 +23,6 @@ public enum EnemyEnum
     private int expWorth;
     EnemyEnum(String name, int level, int hp_max, int defense, int strength, int luck, int expWorth)
     {
-
         System.out.println("EnemyEnum Initialize");
         System.out.println(StatEnum.Defense);
 
@@ -36,8 +35,6 @@ public enum EnemyEnum
         stats.put(StatEnum.Luck,luck);
 
         stats.put(StatEnum.Level,level);
-
-
     }
     public int getStat(StatEnum stat)
     {

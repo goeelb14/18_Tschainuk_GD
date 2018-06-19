@@ -8,14 +8,12 @@ package fight;
 import character.CharacterGameStats;
 import character.NpcCharacterAppState;
 import character.StatEnum;
-import com.jme3.app.Application;
 import com.jme3.asset.AssetManager;
 import com.jme3.audio.AudioNode;
 import com.jme3.scene.Node;
 import java.util.HashMap;
 import java.util.Map;
 import overlay.GUIListener;
-import overlay.HudDisplay;
 
 /**
  *
@@ -30,12 +28,14 @@ public class NpcStatus
  private AssetManager assetManager;
  private CharacterGameStats player ;// dies ist der Spieler
 private Node rootNode;
+
  public NpcStatus(GUIListener guid, CharacterGameStats player, Node rootNode)
  {
     this.player=player;
     player.addObserver(guid);
     this.rootNode=rootNode;
  }
+ 
  public void setAssetManager(AssetManager asset)
  {
      this.assetManager=asset;
@@ -60,8 +60,6 @@ private Node rootNode;
      return player;
  }
 
-
- 
  public boolean takeDamage(NpcCharacterAppState character)
  {  
     int damage = combat.calcDamage(player, npcMap.get(character), true); // Schaden von Angriff kalkulieren
@@ -78,12 +76,10 @@ private Node rootNode;
 //             
 //             death.play(); 
 //             rootNode.detachChild(death);
-            
-             System.out.println("AudioNode worked");
-        return true;
-         
-    }
-    
+//            
+//             System.out.println("AudioNode worked");
+        return true;        
+    }   
      return false;
  }
  
@@ -96,7 +92,5 @@ private Node rootNode;
         Enemy e = new Enemy(EnemyEnum.HADLER); //vorläufig existiert nur Hadler als Gegner
         npcMap.put(appState, e);
   }
- }
- 
- 
+ } 
 }

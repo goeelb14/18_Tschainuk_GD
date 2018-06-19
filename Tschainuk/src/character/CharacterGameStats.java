@@ -22,12 +22,9 @@ public class CharacterGameStats extends Observable{
     Map<StatEnum, Integer> baseStats;
     Map<StatEnum, Integer> totalStats;
     List<SkillModifier> modif;
-   
-    
-    
-    private long exp;
      
-    
+    private long exp;
+      
     public long WhenNextLevel()
     {
         int level=baseStats.get(StatEnum.Level);
@@ -37,8 +34,8 @@ public class CharacterGameStats extends Observable{
             erg+= Math.round((Math.pow(level, 3)*7/8));
         }
         return erg-exp;
-        
     }
+    
     public boolean NextLevelReached(long exp)
     {
         int level = getStat(StatEnum.Level);
@@ -51,6 +48,7 @@ public class CharacterGameStats extends Observable{
         System.out.println("LEvel: "+getStat(StatEnum.Level));
         return level != getStat(StatEnum.Level);
     }
+    
     private void levelupdate()
     {
         int level = baseStats.get(StatEnum.Level)+1;
@@ -66,7 +64,6 @@ public class CharacterGameStats extends Observable{
             baseStats.get(StatEnum.Defense)+Math.round((float)( baseStats.get(StatEnum.Defense)/10+2)));
             baseStats.put(StatEnum.Luck,
             baseStats.get(StatEnum.Luck)+ Math.round((float)( baseStats.get(StatEnum.Luck)/10+3)));
-            
         }
         else
         {
@@ -80,11 +77,11 @@ public class CharacterGameStats extends Observable{
             baseStats.get(StatEnum.Luck)+Math.round((float)( baseStats.get(StatEnum.Luck)/10)));
         }
        
-        
         updateStats();
         setChanged();
         this.notifyObservers();
     }
+    
     public void updateStats()
     {
         totalStats.put(StatEnum.HPMax,baseStats.get(StatEnum.HPMax));
@@ -102,6 +99,7 @@ public class CharacterGameStats extends Observable{
         setChanged();
         this.notifyObservers();
     }
+    
    public void applyMod(SkillModifier mod)
    {
        if(mod.isTotalValue())
@@ -119,19 +117,23 @@ public class CharacterGameStats extends Observable{
        setChanged();
        this.notifyObservers();
    }
+   
     public void addModifier(SkillModifier mod)
     {
         modif.add(mod);
         applyMod(mod);
     }
+    
     public void removeModifier(SkillModifier mod)
     {
         modif.remove(mod);
     }
+    
     public CharacterGameStats()
     {
         initialize();
     }
+    
     private void initialize()
     {
         baseStats = new HashMap<>();
@@ -143,20 +145,19 @@ public class CharacterGameStats extends Observable{
         baseStats.put(StatEnum.Luck, 20);
         totalStats= new HashMap<>(baseStats);
         exp=0;
-        modif= new ArrayList<>();
-       
-        
-        
-        
+        modif= new ArrayList<>(); 
     }
+    
     public int getStat(StatEnum stat)
     {
         return totalStats.get(stat);
     }
+    
     public int getBaseStat(StatEnum stat)
     {
         return baseStats.get(stat);
     }
+    
      public void takeDamage(int damage)
       {
          int currentHP= totalStats.get(StatEnum.HPNow);
@@ -177,10 +178,6 @@ public class CharacterGameStats extends Observable{
       
        super.addObserver(o);
        setChanged();
-       notifyObservers();
-       
-       
-   }
-  
-    
+       notifyObservers();       
+   }    
 }

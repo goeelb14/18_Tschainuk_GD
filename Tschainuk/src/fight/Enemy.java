@@ -6,7 +6,6 @@
 package fight;
 
 import character.StatEnum;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +15,6 @@ import java.util.Map;
  */
 public class Enemy 
 {
-
-
      private Map<StatEnum, Integer> stats;
      private  EnemyEnum type;
 
@@ -37,19 +34,19 @@ public class Enemy
         stats.put(StatEnum.Strength, type.getStat(StatEnum.Strength));
         stats.put(StatEnum.Defense, type.getStat(StatEnum.Defense));
         stats.put(StatEnum.Luck, type.getStat(StatEnum.Luck));
-        expWorth=type.getExpWorth();
-        
-        
-        
+        expWorth=type.getExpWorth();       
     }
+      
       public int getStat(StatEnum stat)
       {
           return stats.get(stat);
       }
+      
       public int getExpWorth()
       {
           return expWorth;
       }
+      
       public void takeDamage(int damage)
       {
          int currentHP= stats.get(StatEnum.HPNow);
@@ -61,6 +58,5 @@ public class Enemy
          {
              stats.put(StatEnum.HPNow, currentHP-damage);
          }
-      }
-      
+      }     
 }

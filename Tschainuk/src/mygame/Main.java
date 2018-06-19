@@ -8,7 +8,6 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
 import map.MapAppState;
 import overlay.HeadsUpDisplayAppState;
-import character.NpcCharacterAppState;
 import character.NpcManager;
 import character.PhysicalCharacterAppState;
 import com.jme3.audio.AudioNode;
@@ -19,14 +18,6 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import de.lessvoid.nifty.Nifty;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-
 import overlay.GUIListener;
 //import overlay.HudDisplay;
 import overlay.HudDisplay;
@@ -39,10 +30,8 @@ public class Main extends SimpleApplication
 
     public static void main(String[] args)
     {
-        
         Main app = new Main();
-        app.start();
-        
+        app.start();       
     }
 
     @Override
@@ -54,10 +43,7 @@ public class Main extends SimpleApplication
         addAppStates();
         
         viewPort.setBackgroundColor(ColorRGBA.White);
-        flyCam.setMoveSpeed(50);
-        
-        
-        
+        flyCam.setMoveSpeed(50);       
     }
     StartDisplay di;
     GUIListener guiL;
@@ -65,8 +51,7 @@ public class Main extends SimpleApplication
    HudDisplay hud;
    NiftyJmeDisplay niftyDisplay;
     public void niftyInit()
-    {
-       
+    {      
         aud= new AudioNode(assetManager,"music/SteamTrack.wav");
         aud.setPositional(false);
         rootNode.attachChild(aud);
@@ -77,8 +62,7 @@ public class Main extends SimpleApplication
         di= new StartDisplay(niftyDisplay);
           cgs=new CharacterGameStats();
          guiL= new GUIListener(guiViewPort,niftyDisplay,hud,aud, rootNode, assetManager,cgs);
-         
-         
+           
         inputManager.addMapping("CPressed", new KeyTrigger(KeyInput.KEY_C));
         inputManager.addListener(guiL, "CPressed");
         inputManager.addMapping("LeftMouse", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
@@ -92,20 +76,13 @@ public class Main extends SimpleApplication
         Nifty nifty = niftyDisplay.getNifty();
         nifty.fromXml("DisplayImages/HudXML.xml", "start", di);
        
-        guiViewPort.addProcessor(niftyDisplay);
-       
-       
-       
-       
-       
-       
-        
+        guiViewPort.addProcessor(niftyDisplay);       
     }
+    
     private CharacterGameStats cgs;
     private StatsListener sl;
     private void addAppStates()
-    {
-        
+    {    
         PhysicalCharacterAppState pcas = new PhysicalCharacterAppState(bulletAppState);
         MapAppState mas = new MapAppState(bulletAppState);
       
@@ -114,13 +91,9 @@ public class Main extends SimpleApplication
         man.spawnNpc(new Vector3f(-15f, 0, -3));
         man.spawnNpc(new Vector3f(-18f, 0, 0));
 
-
         HeadsUpDisplayAppState hudas = new HeadsUpDisplayAppState();
         GunActionAppState gaas = new GunActionAppState(bulletAppState);
-        
-        //Hinzufügen der PhysicsTickListener
-        this.bulletAppState.getPhysicsSpace().addTickListener(gaas);
-        
+                
         stateManager.attach(pcas);
         stateManager.attach(mas);
         stateManager.attach(hudas);

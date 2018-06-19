@@ -5,15 +5,11 @@
  */
 package character;
 
-import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.input.InputManager;
 import com.jme3.math.Vector3f;
-import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 import fight.NpcStatus;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +18,7 @@ import overlay.GUIListener;
 /**
  *
  * @author Simon Pusterhofer
+ * Diese Klasse Verwaltet eine Liste von Npcs
  */
 public class NpcManager 
 {
@@ -61,7 +58,8 @@ public class NpcManager
         NpcCharacterAppState npc = new NpcCharacterAppState(bulletAppState, guid, cgs, rootNode, assetManager, npcStatus, startingPos, npcName);
         stateManager.attach(npc);                
         bulletAppState.getPhysicsSpace().addTickListener(npc);
-
+        
+        npcList.add(npc);
         npcSequenceNumber++;
     }
 }
